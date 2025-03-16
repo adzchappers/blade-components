@@ -41,7 +41,7 @@
         "test:coverage": "./vendor/bin/phpunit --coverage-html coverage",
         "test:phpstan": "./vendor/bin/phpstan analyse",
         "test": [
-            "@test:phpstan",
+            "@test:phpunit",
             "@test:phpstan"
         ]
     }
