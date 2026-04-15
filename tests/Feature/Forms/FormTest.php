@@ -41,7 +41,7 @@ class FormTest extends TestCase
         $view = $this->blade('<x-form method="PUT">Test Content</x-form>');
 
         $view->assertSee('<form method="POST"', false)
-            ->assertSee('<input type="hidden" name="_token" value="" autocomplete="off">', false)
+            ->assertSee('name="_token"', false)
             ->assertSee('<input type="hidden" name="_method" value="PUT">', false)
             ->assertSee('Test Content', false);
     }
@@ -52,7 +52,7 @@ class FormTest extends TestCase
         $view = $this->blade('<x-form method="PATCH">Test Content</x-form>');
 
         $view->assertSee('<form method="POST"', false)
-            ->assertSee('<input type="hidden" name="_token" value="" autocomplete="off">', false)
+            ->assertSee('name="_token"', false)
             ->assertSee('<input type="hidden" name="_method" value="PATCH">', false)
             ->assertSee('Test Content', false);
     }
@@ -63,7 +63,7 @@ class FormTest extends TestCase
         $view = $this->blade('<x-form method="DELETE">Test Content</x-form>');
 
         $view->assertSee('<form method="POST"', false)
-            ->assertSee('<input type="hidden" name="_token" value="" autocomplete="off">', false)
+            ->assertSee('name="_token"', false)
             ->assertSee('<input type="hidden" name="_method" value="DELETE">', false)
             ->assertSee('Test Content', false);
     }

@@ -1,10 +1,22 @@
 {
     "name": "adzchappers/blade-components",
     "description": "A set of components to use within Laravel Blade views",
+    "keywords": [
+        "adzchappers",
+        "laravel",
+        "form",
+        "forms",
+        "form-components",
+        "laravel-form-components",
+        "blade",
+        "blade-components",
+        "laravel-blade-components"
+    ],
     "license": "MIT",
+    "type": "library",
     "authors": [
         {
-            "name": "Adam Chapman"
+            "name": "Adz Chappers"
         }
     ],
     "autoload": {
@@ -29,11 +41,11 @@
         "illuminate/support": "^11.0|^12.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^10.0",
-        "phpunit/phpunit": "^11.5",
-        "laravel/pint": "^1.21",
         "larastan/larastan": "^3.2",
-        "phpstan/phpstan": "^2.1"
+        "laravel/pint": "^1.21",
+        "orchestra/testbench": "^10.0",
+        "phpstan/phpstan": "^2.1",
+        "phpunit/phpunit": "^11.5"
     },
     "scripts": {
         "pint": "pint --config pint.json",

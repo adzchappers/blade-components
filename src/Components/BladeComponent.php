@@ -10,8 +10,6 @@ use Illuminate\View\View;
 
 abstract class BladeComponent extends Component
 {
-    private ?string $id = null;
-
     /**
      * {@inheritDoc}
      */
@@ -23,18 +21,5 @@ abstract class BladeComponent extends Component
         // $styling = config('blade-components.styling');
 
         return view(config("blade-components.components.{$component}.view"));
-    }
-
-    /**
-     * Returns the ID of a component if it exists
-     * If the ID doesn't exist, a unique one is assigned and returned
-     */
-    public function id(): string
-    {
-        if ($this->id) {
-            return $this->id;
-        }
-
-        return $this->id = 'auto_' . uniqid();
     }
 }
