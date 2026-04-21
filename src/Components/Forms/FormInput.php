@@ -7,7 +7,7 @@ namespace AdzChappers\BladeComponents\Components\Forms;
 class FormInput extends FormComponent
 {
     public function __construct(
-        public ?string $name,
+        public string $name,
         public ?string $id,
         public ?string $label = null,
         public string $type = 'text',

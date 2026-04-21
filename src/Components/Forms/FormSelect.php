@@ -9,7 +9,7 @@ use Illuminate\Support\Arr;
 class FormSelect extends FormComponent
 {
     public function __construct(
-        public ?string $name,
+        public string $name,
         public ?string $id,
         public ?string $label = null,
         public ?string $placeholder = null,

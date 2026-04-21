@@ -9,7 +9,7 @@ use Illuminate\Support\Arr;
 class FormCheckbox extends FormComponent
 {
     public function __construct(
-        public ?string $name,
+        public string $name,
         public ?string $id = null,
         public ?string $label = null,
         public ?string $value = '1',

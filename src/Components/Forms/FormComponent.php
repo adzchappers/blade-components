@@ -5,15 +5,17 @@ declare(strict_types=1);
 namespace AdzChappers\BladeComponents\Components\Forms;
 
 use AdzChappers\BladeComponents\Components\BladeComponent;
-use Illuminate\Support\Str;
+use AdzChappers\BladeComponents\Concerns\Forms\InteractsWithFormName;
 
 abstract class FormComponent extends BladeComponent
 {
+    use InteractsWithFormName;
+
+    public string $name;
+
     public ?string $id = null;
 
     public ?string $value = null;
-
-    public ?string $name = null;
 
     public bool $showError = false;
 
@@ -28,26 +30,6 @@ abstract class FormComponent extends BladeComponent
         }
 
         return $this->id = 'auto_' . uniqid();
-    }
-
-    /**
-     * Strips out array notation so "somename[key]" -> "somename.key"
-     * Can also remove the dynamic array notation so "somename[]" -> "somename"
-     *
-     * Needed for:
-     *  - old() - needs the dot notation key name
-     *  - errors - Laravel returns errors as dot notation
-     */
-    public function convertNameToDotNotation(
-        bool $dropArraySuffix = false
-    ): string {
-        $name = $this->name;
-
-        if ($dropArraySuffix) {
-            $name = Str::before($name, '[]');
-        }
-
-        return str_replace(['[', ']'], ['.', ''], $name);
     }
 
     /**
