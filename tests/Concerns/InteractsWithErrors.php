@@ -18,7 +18,7 @@ trait InteractsWithErrors
         $session = app('session.store');
 
         // Create the error bag
-        $viewErrorBag = new ViewErrorBag();
+        $viewErrorBag = new ViewErrorBag;
 
         // Add error messages if there are any
         if (count($messages) > 0) {

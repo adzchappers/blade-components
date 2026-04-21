@@ -13,7 +13,7 @@ class FormButton extends BladeComponent
     ) {
         $this->type = strtolower($this->type);
 
-        if (!in_array($this->type, ['button', 'reset', 'submit'])) {
+        if (! in_array($this->type, ['button', 'reset', 'submit'])) {
             $this->type = 'submit';
         }
     }

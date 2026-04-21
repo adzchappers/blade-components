@@ -29,7 +29,7 @@ class FormSelectTest extends TestCase
                 'options' => [
                     'gb' => 'United Kingdom',
                     'us' => 'United States',
-                ]
+                ],
             ]
         );
 

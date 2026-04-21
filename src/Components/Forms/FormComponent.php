@@ -10,8 +10,11 @@ use Illuminate\Support\Str;
 abstract class FormComponent extends BladeComponent
 {
     public ?string $id = null;
+
     public ?string $value = null;
+
     public ?string $name = null;
+
     public bool $showError = false;
 
     /**

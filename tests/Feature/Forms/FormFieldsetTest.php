@@ -30,7 +30,7 @@ class FormFieldsetTest extends TestCase
             'Legend Title',
             '</legend>',
             'Content',
-            '</fieldset>'
+            '</fieldset>',
         ]);
     }
 

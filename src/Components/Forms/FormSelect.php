@@ -15,7 +15,7 @@ class FormSelect extends FormComponent
         public ?string $placeholder = null,
         public array $options = [],
         public bool $multiple = false,
-        public array|string|null $selected = null,
+        public array | string | null $selected = null,
         public bool $disabled = false,
         public bool $required = false,
         public bool $readonly = false,
@@ -30,6 +30,6 @@ class FormSelect extends FormComponent
 
     public function isSelected($key)
     {
-        return (in_array($key, $this->selected));
+        return in_array($key, $this->selected);
     }
 }

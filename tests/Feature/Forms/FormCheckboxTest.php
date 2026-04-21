@@ -105,7 +105,7 @@ class FormCheckboxTest extends TestCase
     {
         $view = $this->blade('<x-form-checkbox name="agree" label="Agree" />');
 
-        $view->assertSeeHtmlInOrder(['id="', '<label', 'for="', 'Agree','</label>']);
+        $view->assertSeeHtmlInOrder(['id="', '<label', 'for="', 'Agree', '</label>']);
     }
 
     #[Test]
