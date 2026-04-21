@@ -10,43 +10,57 @@ use Tests\TestCase;
 class FormButtonTest extends TestCase
 {
     #[Test]
-    public function button_component_defaults_to_submit_type()
+    public function renders_with_default_of_submit()
     {
-        $view = $this->blade('<x-form-button>Save</x-form-button>');
+        $view = $this->blade('<x-form-button></x-form-button>');
 
-        $view->assertSee('type="submit"', false)
-            ->assertSee('Save', false);
+        $view->assertSeeHtmlInOrder(['<button', 'type="submit"', 'Submit', '</button>']);
     }
 
     #[Test]
-    public function button_component_renders_button_type()
+    public function renders_type_button()
     {
         $view = $this->blade('<x-form-button type="button">Cancel</x-form-button>');
 
-        $view->assertSee('type="button"', false);
+        $view->assertSeeHtmlInOrder(['<button', 'type="button"', 'Cancel', '</button>']);
     }
 
     #[Test]
-    public function button_component_renders_reset_type()
+    public function renders_type_reset()
     {
         $view = $this->blade('<x-form-button type="reset">Reset</x-form-button>');
 
-        $view->assertSee('type="reset"', false);
+        $view->assertSeeHtmlInOrder(['<button', 'type="reset"', 'Reset', '</button>']);
     }
 
     #[Test]
-    public function button_component_falls_back_to_submit_for_invalid_type()
+    public function renders_with_submit_fallback_for_invalid_type()
     {
         $view = $this->blade('<x-form-button type="invalid">Save</x-form-button>');
 
-        $view->assertSee('type="submit"', false);
+        $view->assertSeeHtmlInOrder(['<button', 'type="submit"', 'Save', '</button>']);
     }
 
     #[Test]
-    public function button_component_renders_slot_as_label()
+    public function renders_slot_as_content()
     {
         $view = $this->blade('<x-form-button>Submit Form</x-form-button>');
 
-        $view->assertSee('Submit Form', false);
+        $view->assertSeeHtmlInOrder(['<button', 'type="submit"', 'Submit', '</button>']);
+    }
+
+    #[Test]
+    public function renders_with_additional_attributes(): void
+    {
+        $view = $this->blade('<x-form-button class="custom-class">Submit Form</x-form-button>');
+
+        $view->assertSeeHtmlInOrder([
+            '<button',
+            'type="submit"',
+            'class="',
+            'custom-class',
+            'Submit Form',
+            '</button>',
+        ]);
     }
 }

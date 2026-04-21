@@ -6,43 +6,54 @@ namespace Tests\Feature\Forms;
 
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Concerns\InteractsWithErrors;
+use Tests\Concerns\InteractsWithFlashedData;
 use Tests\TestCase;
 
 class FormInputTest extends TestCase
 {
     use InteractsWithErrors;
+    use InteractsWithFlashedData;
 
     #[Test]
-    public function input_component_renders_with_required_name()
+    public function renders_hidden_and_only_hidden()
+    {
+        $view = $this->blade('<x-form-input type="hidden" name="email" />');
+
+        $view->assertSeeHtmlInOrder(['<input', 'type="hidden"', 'name="email"']);
+        $view->assertDontSeeHtml(['div', 'label']);
+    }
+
+    #[Test]
+    public function renders_with_required_name()
     {
         $view = $this->blade('<x-form-input name="email" />');
 
-        $view->assertSee('name="email"', false)
-            ->assertSee('type="text"', false);
+        $view->assertSeeHtmlInOrder(['<input', 'type="text"', 'name="email"']);
     }
 
     #[Test]
-    public function input_component_renders_with_custom_type()
+    public function renders_with_custom_type()
     {
         $view = $this->blade('<x-form-input name="email" type="email" />');
 
-        $view->assertSee('type="email"', false);
+        $view->assertSeeHtmlInOrder(['<input', 'type="email"', 'name="email"']);
+        $view->assertDontSeeHtml('type="text"');
     }
 
     #[Test]
-    public function input_component_renders_with_placeholder()
+    public function renders_with_placeholder()
     {
         $view = $this->blade('<x-form-input name="email" placeholder="Enter email" />');
 
-        $view->assertSee('placeholder="Enter email"', false);
+        $view->assertSeeHtmlInOrder(['placeholder="Enter email"']);
     }
 
     #[Test]
-    public function input_component_renders_with_value()
+    public function renders_with_value()
     {
         $view = $this->blade('<x-form-input name="email" value="test@example.com" />');
 
-        $view->assertSee('value="test@example.com"', false);
+        $view->assertSeeHtmlInOrder(['value="test@example.com"']);
     }
 
     #[Test]
@@ -50,100 +61,113 @@ class FormInputTest extends TestCase
     {
         $view = $this->blade('<x-form-input name="email" required />');
 
-        $view->assertSee('required', false)
-            ->assertSee('aria-required="true"', false);
+        $view->assertSeeHtmlInOrder(['required aria-required="true"']);
     }
 
     #[Test]
-    public function input_component_renders_disabled_with_aria()
+    public function renders_disabled_with_aria()
     {
         $view = $this->blade('<x-form-input name="email" disabled />');
 
-        $view->assertSee('disabled', false)
-            ->assertSee('aria-disabled="true"', false);
+        $view->assertSeeHtmlInOrder(['disabled aria-disabled="true"']);
     }
 
     #[Test]
-    public function input_component_generates_id()
-    {
-        $view = $this->blade('<x-form-input name="email" />');
-
-        $view->assertSee('id="', false);
-    }
-
-    #[Test]
-    public function input_component_renders_label()
-    {
-        $view = $this->blade('<x-form-input name="email" label="Email address" />');
-
-        $view->assertSee('Email address', false)
-            ->assertSee('<label', false);
-    }
-
-    #[Test]
-    public function input_component_label_for_matches_input_id()
-    {
-        $view = $this->blade('<x-form-input name="email" label="Email address" id="email-field" />');
-
-        $view->assertSee('id="email-field"', false)
-            ->assertSee('for="email-field"', false);
-    }
-
-    #[Test]
-    public function input_component_does_not_render_label_when_not_provided()
-    {
-        $view = $this->blade('<x-form-input name="email" />');
-
-        $view->assertDontSee('<label', false);
-    }
-
-    #[Test]
-    public function input_component_renders_readonly_with_aria()
+    public function renders_readonly_with_aria()
     {
         $view = $this->blade('<x-form-input name="email" readonly />');
 
-        $view->assertSee('readonly', false)
-            ->assertSee('aria-readonly="true"', false);
+        $view->assertSeeHtmlInOrder(['readonly aria-readonly="true"']);
     }
 
     #[Test]
-    public function input_component_does_not_show_error_by_default(): void
+    public function renders_with_generated_id()
+    {
+        $view = $this->blade('<x-form-input name="email" />');
+
+        $view->assertSeeHtmlInOrder(['<input', 'id="', 'type="text"']);
+    }
+
+    #[Test]
+    public function renders_label()
+    {
+        $view = $this->blade('<x-form-input name="email" label="Email address" />');
+
+        $view->assertSeeHtmlInOrder(['<label', 'Email address', '</label>', '<input', 'id="', 'type="text"']);
+    }
+
+    #[Test]
+    public function renders_label_for_matches_input_id()
+    {
+        $view = $this->blade('<x-form-input name="email" label="Email address" id="email-field" />');
+
+        $view->assertSeeHtmlInOrder([
+            '<label',
+            'for="email-field"',
+            'Email address',
+            '</label>',
+            '<input',
+            'id="email-field"',
+            'type="text"',
+        ]);
+    }
+
+    #[Test]
+    public function does_not_render_label_when_not_provided()
+    {
+        $view = $this->blade('<x-form-input name="email" />');
+
+        $view->assertDontSeeHtml('<label');
+    }
+
+    #[Test]
+    public function does_not_show_error_by_default(): void
     {
         $this->shareErrors(['email' => 'Email is required']);
 
         $view = $this->blade('<x-form-input name="email" />');
 
-        $view->assertDontSee('text-red-600', false);
+        $view->assertDontSeeHtml(['text-red-600', 'Email is required']);
     }
 
     #[Test]
-    public function input_component_shows_error_when_show_errors_is_true(): void
+    public function shows_error_when_show_errors_is_true(): void
     {
         $this->shareErrors(['email' => 'Email is required']);
 
         $view = $this->blade('<x-form-input name="email" show-error />');
 
-        $view->assertSee('Email is required', false)
-            ->assertSee('text-red-600', false);
+        $view->assertSeeHtmlInOrder(['text-red-600', 'Email is required']);
     }
 
     #[Test]
-    public function input_component_does_not_show_error_when_field_has_no_errors(): void
+    public function does_not_show_error_when_field_has_no_errors(): void
     {
         $this->shareErrors(['name' => 'Name is required']);
 
         $view = $this->blade('<x-form-input name="email" show-error />');
 
-        $view->assertDontSee('text-red-600', false);
+        $view->assertDontSeeHtml(['text-red-600', 'Name is required']);
     }
 
     #[Test]
-    public function input_component_strips_array_notation_for_error_lookup(): void
+    public function strips_array_notation_for_error_lookup(): void
     {
         $this->shareErrors(['tags' => 'Tags are required']);
 
         $view = $this->blade('<x-form-input name="tags[]" show-error />');
 
-        $view->assertSee('Tags are required', false);
+        $view->assertSeeHtmlInOrder(['Tags are required']);
+    }
+
+    #[Test]
+    public function submitted_data_changes_default_value()
+    {
+        $this->flashFormData(['email' => 'this-is-a-different-value']);
+
+        $view = $this->blade('<x-form-input name="email" value="test@example.com" />');
+
+        $view->assertSeeHtmlInOrder(['value="this-is-a-different-value"']);
+        $view->assertDontSeeHtml(['value="test@example.com"']);
     }
 }

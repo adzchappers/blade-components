@@ -18,21 +18,14 @@ class FormCheckbox extends FormComponent
         public bool $readonly = false,
         public bool $showError = false,
     ) {
-        // If checkbox is not checked, HTML forms do not send the specific input
-        // field in the submission - this means it always falls back to the
-        // default state, i.e. if the checkbox was checked by default and then
-        // unchecked and there were form validation errors, the page would
-        // render the checkbox as checked again, even if the user unchecked it
+        // If checkbox is not checked, HTML forms do not send the input field in
+        // the submission - this means blade old with $default will revert to
+        // the original $default if a default checked checkbox is unchecked.
 
-        // Check to see if there has been a form submission
+        // Check to see if there is a submission - Otherwise keep the default
         if (session()->hasOldInput()) {
-            // Load up the old data if if exists for this item - if it's missing
-            // i.e. (unchecked), old() returns null, set $this->checked false.
             $oldData = old($this->convertNameToDotNotation(true));
-
             $this->checked = in_array($this->value, Arr::wrap($oldData));
         }
-
-        // Otherwise we keep the default state.
     }
 }

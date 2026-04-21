@@ -13,16 +13,15 @@ class FormSelectTest extends TestCase
     use InteractsWithErrors;
 
     #[Test]
-    public function select_component_renders_with_required_name()
+    public function renders_with_required_name()
     {
         $view = $this->blade('<x-form-select name="country"></x-form-select>');
 
-        $view->assertSee('<select', false)
-            ->assertSee('name="country"', false);
+        $view->assertSeeHtmlInOrder(['<select', 'name="country"']);
     }
 
     #[Test]
-    public function select_component_renders_options()
+    public function renders_options()
     {
         $view = $this->blade(
             '<x-form-select name="country" :options="$options" />',
@@ -34,75 +33,70 @@ class FormSelectTest extends TestCase
             ]
         );
 
-        $view->assertSee('<option value="gb">United Kingdom</option>', false);
-        $view->assertSee('<option value="us">United States</option>', false);
+        $view->assertSeeHtmlInOrder([
+            '<option value="gb">United Kingdom</option>',
+            '<option value="us">United States</option>',
+        ]);
     }
 
     #[Test]
-    public function select_component_renders_required_with_aria()
+    public function renders_required_with_aria()
     {
         $view = $this->blade('<x-form-select name="country" required></x-form-select>');
 
-        $view->assertSee('required', false)
-            ->assertSee('aria-required="true"', false);
+        $view->assertSeeHtmlInOrder(['required', 'aria-required="true"']);
     }
 
     #[Test]
-    public function select_component_renders_disabled_with_aria()
+    public function renders_disabled_with_aria()
     {
         $view = $this->blade('<x-form-select name="country" disabled></x-form-select>');
 
-        $view->assertSee('disabled', false)
-            ->assertSee('aria-disabled="true"', false);
+        $view->assertSeeHtmlInOrder(['disabled', 'aria-disabled="true"']);
     }
 
     #[Test]
-    public function select_component_generates_id()
+    public function renders_with_generated_id()
     {
         $view = $this->blade('<x-form-select name="country"></x-form-select>');
 
-        $view->assertSee('id="', false);
+        $view->assertSeeHtmlInOrder(['id="']);
     }
 
     #[Test]
-    public function select_component_renders_label()
+    public function renders_label()
     {
         $view = $this->blade('<x-form-select name="country" label="Country"></x-form-select>');
 
-        $view->assertSee('Country', false)
-            ->assertSee('<label', false);
+        $view->assertSeeHtmlInOrder(['<label', 'Country']);
     }
 
     #[Test]
-    public function select_component_label_for_matches_select_id()
+    public function renders_label_for_matches_select_id()
     {
         $view = $this->blade('<x-form-select name="country" label="Country" id="country-select"></x-form-select>');
 
-        $view->assertSee('id="country-select"', false)
-            ->assertSee('for="country-select"', false);
+        $view->assertSeeHtmlInOrder(['for="country-select"', 'id="country-select"']);
     }
 
     #[Test]
-    public function select_component_renders_readonly()
+    public function renders_readonly()
     {
         $view = $this->blade('<x-form-select name="country" readonly></x-form-select>');
 
-        $view->assertSee('tabindex="-1"', false)
-            ->assertSee('aria-readonly="true"', false)
-            ->assertSee('pointer-events-none', false);
+        $view->assertSeeHtmlInOrder(['tabindex="-1"', 'aria-readonly="true"', 'pointer-events-none']);
     }
 
     #[Test]
-    public function select_component_renders_multiple()
+    public function renders_multiple()
     {
         $view = $this->blade('<x-form-select name="countries" multiple></x-form-select>');
 
-        $view->assertSee('multiple', false)
-            ->assertSee('name="countries[]"', false);
+        $view->assertSeeHtmlInOrder(['name="countries[]"', 'multiple']);
     }
 
     #[Test]
-    public function select_component_marks_option_as_selected_when_selected_string_matches()
+    public function renders_with_option_as_selected_when_selected_string_matches()
     {
         $view = $this->blade(
             '<x-form-select name="country" :options="$options" :selected="$selected" />',
@@ -115,12 +109,14 @@ class FormSelectTest extends TestCase
             ]
         );
 
-        $view->assertSee('<option value="gb" selected>United Kingdom</option>', false);
-        $view->assertSee('<option value="us">United States</option>', false);
+        $view->assertSeeHtmlInOrder([
+            '<option value="gb" selected>United Kingdom</option>',
+            '<option value="us">United States</option>',
+        ]);
     }
 
     #[Test]
-    public function select_component_marks_option_as_selected_when_selected_array_matches()
+    public function renders_with_option_as_selected_when_selected_array_matches()
     {
         $view = $this->blade(
             '<x-form-select name="country" :options="$options" :selected="$selected" />',
@@ -133,12 +129,14 @@ class FormSelectTest extends TestCase
             ]
         );
 
-        $view->assertSee('<option value="gb" selected>United Kingdom</option>', false);
-        $view->assertSee('<option value="us">United States</option>', false);
+        $view->assertSeeHtmlInOrder([
+            '<option value="gb" selected>United Kingdom</option>',
+            '<option value="us">United States</option>',
+        ]);
     }
 
     #[Test]
-    public function select_component_marks_multiple_option_as_selected_when_selected_array_matches()
+    public function renders_with_multiple_option_as_selected_when_selected_array_matches()
     {
         $view = $this->blade(
             '<x-form-select name="country" :options="$options" :selected="$selected" />',
@@ -152,39 +150,40 @@ class FormSelectTest extends TestCase
             ]
         );
 
-        $view->assertSee('<option value="gb" selected>United Kingdom</option>', false);
-        $view->assertSee('<option value="us" selected>United States</option>', false);
-        $view->assertSee('<option value="de">Germany</option>', false);
+        $view->assertSeeHtmlInOrder([
+            '<option value="de">Germany</option>',
+            '<option value="gb" selected>United Kingdom</option>',
+            '<option value="us" selected>United States</option>',
+        ]);
     }
 
     #[Test]
-    public function select_component_does_not_show_error_by_default(): void
+    public function does_not_show_error_by_default(): void
     {
         $this->shareErrors(['country' => 'Country is required']);
 
         $view = $this->blade('<x-form-select name="country"></x-form-select>');
 
-        $view->assertDontSee('text-red-600', false);
+        $view->assertDontSeeHtml('text-red-600');
     }
 
     #[Test]
-    public function select_component_shows_error_when_show_errors_is_true(): void
+    public function shows_error_when_show_errors_is_true(): void
     {
         $this->shareErrors(['country' => 'Country is required']);
 
         $view = $this->blade('<x-form-select name="country" show-error></x-form-select>');
 
-        $view->assertSee('Country is required', false)
-            ->assertSee('text-red-600', false);
+        $view->assertSeeHtmlInOrder(['text-red-600', 'Country is required']);
     }
 
     #[Test]
-    public function select_component_does_not_show_error_when_field_has_no_errors(): void
+    public function does_not_show_error_when_field_has_no_errors(): void
     {
         $this->shareErrors(['name' => 'Name is required']);
 
         $view = $this->blade('<x-form-select name="country" show-error></x-form-select>');
 
-        $view->assertDontSee('text-red-600', false);
+        $view->assertDontSeeHtml('text-red-600');
     }
 }

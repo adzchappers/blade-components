@@ -13,94 +13,88 @@ class FormTextareaTest extends TestCase
     use InteractsWithErrors;
 
     #[Test]
-    public function textarea_component_renders_with_name()
+    public function renders_with_name()
     {
         $view = $this->blade('<x-form-textarea name="description" />');
 
-        $view->assertSee('<textarea', false)
-            ->assertSee('name="description"', false);
+        $view->assertSeeHtmlInOrder(['<textarea', 'name="description"']);
     }
 
     #[Test]
-    public function textarea_component_renders_value()
+    public function _renders_value()
     {
         $view = $this->blade('<x-form-textarea name="description" value="Some text" />');
 
-        $view->assertSee('Some text', false);
+        $view->assertSeeHtmlInOrder(['Some text']);
     }
 
     #[Test]
-    public function textarea_component_renders_required_with_aria()
+    public function renders_required_with_aria()
     {
         $view = $this->blade('<x-form-textarea name="description" required />');
 
-        $view->assertSee('required', false)
-            ->assertSee('aria-required="true"', false);
+        $view->assertSeeHtmlInOrder(['required', 'aria-required="true"']);
     }
 
     #[Test]
-    public function textarea_component_renders_readonly_with_aria()
+    public function renders_readonly_with_aria()
     {
         $view = $this->blade('<x-form-textarea name="description" readonly />');
 
-        $view->assertSee('readonly', false)
-            ->assertSee('aria-readonly="true"', false);
+        $view->assertSeeHtmlInOrder(['readonly', 'aria-readonly="true"']);
     }
 
     #[Test]
-    public function textarea_component_renders_label()
+    public function renders_label()
     {
         $view = $this->blade('<x-form-textarea name="description" label="Description" />');
 
-        $view->assertSee('Description', false)
-            ->assertSee('<label', false);
+        $view->assertSeeHtmlInOrder(['<label', 'Description']);
     }
 
     #[Test]
-    public function textarea_component_label_for_matches_textarea_id()
+    public function renders_label_for_matches_textarea_id()
     {
         $view = $this->blade('<x-form-textarea name="description" label="Description" id="desc" />');
 
-        $view->assertSee('id="desc"', false)
-            ->assertSee('for="desc"', false);
+        $view->assertSeeHtmlInOrder(['for="desc"', 'id="desc"']);
     }
 
     #[Test]
-    public function textarea_component_does_not_render_label_when_not_provided()
+    public function does_not_render_label_when_not_provided()
     {
         $view = $this->blade('<x-form-textarea name="description" />');
 
-        $view->assertDontSee('<label', false);
+        $view->assertDontSeeHtml('<label');
     }
 
     #[Test]
-    public function textarea_component_does_not_show_error_by_default(): void
+    public function does_not_show_error_by_default(): void
     {
         $this->shareErrors(['description' => 'Description is required']);
 
         $view = $this->blade('<x-form-textarea name="description" />');
 
-        $view->assertDontSee('text-red-600', false);
+        $view->assertDontSeeHtml('text-red-600');
     }
 
     #[Test]
-    public function textarea_component_shows_error_when_show_errors_is_true(): void
+    public function renders_shows_error_when_show_errors_is_true(): void
     {
         $this->shareErrors(['description' => 'Description is required']);
 
         $view = $this->blade('<x-form-textarea name="description" show-error />');
 
-        $view->assertSee('Description is required', false)
-            ->assertSee('text-red-600', false);
+        $view->assertSeeHtmlInOrder(['text-red-600', 'Description is required']);
     }
 
     #[Test]
-    public function textarea_component_does_not_show_error_when_field_has_no_errors(): void
+    public function does_not_show_error_when_field_has_no_errors(): void
     {
         $this->shareErrors(['name' => 'Name is required']);
 
         $view = $this->blade('<x-form-textarea name="description" show-error />');
 
-        $view->assertDontSee('text-red-600', false);
+        $view->assertDontSeeHtml('text-red-600');
     }
 }

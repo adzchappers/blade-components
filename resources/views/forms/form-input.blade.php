@@ -26,7 +26,7 @@
                 @if ($required) required aria-required="true" @endif
                 @if ($disabled) disabled aria-disabled="true" @endif
                 @if ($readonly) readonly aria-readonly="true" @endif
-                {{ $attributes->except('id')->merge(['id' => $id(), 'class' => 'flex-1 block w-full min-w-0 px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed read-only:bg-gray-100 read-only:cursor-not-allowed']) }}
+                {{ $attributes->merge(['class' => 'flex-1 block w-full min-w-0 px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed read-only:bg-gray-100 read-only:cursor-not-allowed']) }}
             />
         </div>
 

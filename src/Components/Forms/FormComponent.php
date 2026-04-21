@@ -68,7 +68,7 @@ abstract class FormComponent extends BladeComponent
     /**
      * Should this component show an error
      */
-    public function showError()
+    public function showError(): bool
     {
         return $this->showError && $this->hasError();
     }
@@ -78,7 +78,7 @@ abstract class FormComponent extends BladeComponent
      */
     public function setValue(
         ?string $default = null
-    ) {
+    ): void {
         $this->value = old(
             $this->convertNameToDotNotation(),
             $default

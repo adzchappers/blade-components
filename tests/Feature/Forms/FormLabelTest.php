@@ -14,16 +14,14 @@ class FormLabelTest extends TestCase
     {
         $view = $this->blade('<x-form-label for="email">Email address</x-form-label>');
 
-        $view->assertSee('<label', false)
-            ->assertSee('for="email"', false)
-            ->assertSee('Email address', false);
+        $view->assertSeeHtmlInOrder(['<label', 'for="email"', 'Email address']);
     }
 
     #[Test]
-    public function passes_through_extra_attributes()
+    public function renders_with_additional_attributes()
     {
         $view = $this->blade('<x-form-label for="email" class="font-bold">Email</x-form-label>');
 
-        $view->assertSee('font-bold', false);
+        $view->assertSeeHtmlInOrder(['font-bold']);
     }
 }

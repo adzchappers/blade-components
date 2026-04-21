@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AdzChappers\BladeComponents\Components\Alerts;
 
 use AdzChappers\BladeComponents\Components\BladeComponent;
+use Illuminate\Support\Arr;
 
 class Warning extends BladeComponent
 {
