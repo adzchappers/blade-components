@@ -149,7 +149,7 @@ class FormSelectTest extends TestCase
     }
 
     #[Test]
-    public function submitted_data_changes_selected(): void
+    public function it_will_repopulate_selected_from_old_input(): void
     {
         $this->flashFormData(['country' => 'us']);
 
@@ -169,11 +169,55 @@ class FormSelectTest extends TestCase
     }
 
     #[Test]
+    public function it_will_merge_additional_variables(): void
+    {
+        $view = $this->blade('<x-form-select name="country" class="custom-class"></x-form-select>');
+
+        $view->assertSeeHtmlInOrder(['custom-class']);
+    }
+
+    #[Test]
     public function it_will_show_multiple_if_set(): void
     {
         $view = $this->blade('<x-form-select name="countries" multiple></x-form-select>');
 
         $view->assertSeeHtmlInOrder(['name="countries[]"', 'multiple']);
+    }
+
+    #[Test]
+    public function it_will_select_no_options_when_selected_is_null(): void
+    {
+        $view = $this->blade(
+            '<x-form-select name="country" :options="$options" :selected="null" />',
+            [
+                'options' => [
+                    'gb' => 'United Kingdom',
+                    'us' => 'United States',
+                ],
+            ]
+        );
+
+        $view->assertDontSeeHtml(['<option value="gb" selected>', '<option value="us" selected>']);
+    }
+
+    #[Test]
+    public function it_will_handle_falsy_old_input(): void
+    {
+        $this->flashFormData(['country' => '0']);
+
+        $view = $this->blade(
+            '<x-form-select name="country" :options="$options" :selected="$selected" />',
+            [
+                'options' => [
+                    '0' => 'Unknown',
+                    'gb' => 'United Kingdom',
+                ],
+                'selected' => 'gb',
+            ]
+        );
+
+        $view->assertSeeHtmlInOrder(['<option value="0" selected>Unknown</option>']);
+        $view->assertDontSeeHtml('<option value="gb" selected>');
     }
 
     #[Test]

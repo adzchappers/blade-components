@@ -43,6 +43,22 @@ class FormFieldsetTest extends TestCase
     }
 
     #[Test]
+    public function it_will_show_legend_and_disabled_combined(): void
+    {
+        $view = $this->blade('<x-form-fieldset legend="Legend Title" :disabled="true">Content</x-form-fieldset>');
+
+        $view->assertSeeHtmlInOrder([
+            '<fieldset',
+            'disabled aria-disabled="true"',
+            '<legend',
+            'Legend Title',
+            '</legend>',
+            'Content',
+            '</fieldset>',
+        ]);
+    }
+
+    #[Test]
     public function it_will_merge_additional_variables(): void
     {
         $view = $this->blade('<x-form-fieldset class="custom-class">Content</x-form-fieldset>');
@@ -51,7 +67,7 @@ class FormFieldsetTest extends TestCase
     }
 
     #[Test]
-    public function renders_slot_content_as_raw_html(): void
+    public function it_will_show_slot_content_as_raw_html(): void
     {
         $view = $this->blade('<x-form-fieldset><input type="text" name="test" /></x-form-fieldset>');
         $view->assertSeeHtmlInOrder(['<fieldset', '<input type="text" name="test" />', '</fieldset>']);

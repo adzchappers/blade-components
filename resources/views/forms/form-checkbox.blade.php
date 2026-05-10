@@ -7,6 +7,7 @@
             value="{{ $value }}"
             @if ($checked) checked="checked" @endif
             @if ($required) required aria-required="true" @endif
+            @if ($disabled) disabled aria-disabled="true" @endif
             @if ($readonly) tabindex="-1" aria-readonly="true" @endif
             {{ $attributes->merge(['class' => 'h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500' . ($readonly ? ' pointer-events-none' : '')]) }}
         />

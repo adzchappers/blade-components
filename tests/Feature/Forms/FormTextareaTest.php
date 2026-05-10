@@ -60,6 +60,14 @@ class FormTextareaTest extends TestCase
     }
 
     #[Test]
+    public function it_will_show_empty_string_placeholder(): void
+    {
+        $view = $this->blade('<x-form-textarea name="description" placeholder="" />');
+
+        $view->assertSeeHtmlInOrder(['placeholder=""']);
+    }
+
+    #[Test]
     public function it_will_generate_id(): void
     {
         $view = $this->blade('<x-form-textarea name="description" />');
@@ -146,7 +154,7 @@ class FormTextareaTest extends TestCase
     }
 
     #[Test]
-    public function submitted_data_changes_default_value(): void
+    public function it_will_repopulate_value_from_old_input(): void
     {
         $this->flashFormData(['description' => 'new value']);
 
@@ -154,5 +162,13 @@ class FormTextareaTest extends TestCase
 
         $view->assertSeeHtmlInOrder(['new value']);
         $view->assertDontSeeHtml('old value');
+    }
+
+    #[Test]
+    public function it_will_merge_additional_variables(): void
+    {
+        $view = $this->blade('<x-form-textarea name="description" class="custom-class" />');
+
+        $view->assertSeeHtmlInOrder(['custom-class']);
     }
 }

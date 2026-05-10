@@ -15,6 +15,7 @@ class FormCheckbox extends FormComponent
         public ?string $value = '1',
         public bool $checked = false,
         public bool $required = false,
+        public bool $disabled = false,
         public bool $readonly = false,
         public bool $showError = true,
     ) {

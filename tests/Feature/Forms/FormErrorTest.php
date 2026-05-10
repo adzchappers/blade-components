@@ -63,7 +63,7 @@ class FormErrorTest extends TestCase
     }
 
     #[Test]
-    public function it_will_strip_array_notatin_to_display_error(): void
+    public function it_will_strip_array_notation_to_display_error(): void
     {
         $this->shareErrors(['permissions' => 'Permissions are required']);
 
@@ -80,6 +80,16 @@ class FormErrorTest extends TestCase
         $view = $this->blade('<x-form-error name="permissions[edit]" />');
 
         $view->assertSeeHtmlInOrder(['<p', 'Edit permission is required', '</p>']);
+    }
+
+    #[Test]
+    public function it_will_resolve_deep_dot_notation_for_error(): void
+    {
+        $this->shareErrors(['users.0.email' => 'Email is required']);
+
+        $view = $this->blade('<x-form-error name="users[0][email]" />');
+
+        $view->assertSeeHtmlInOrder(['<p', 'Email is required', '</p>']);
     }
 
     #[Test]

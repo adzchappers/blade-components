@@ -44,6 +44,22 @@ class FormRadioTest extends TestCase
     }
 
     #[Test]
+    public function it_will_show_required_if_set(): void
+    {
+        $view = $this->blade('<x-form-radio name="colour" value="red" required />');
+
+        $view->assertSeeHtmlInOrder(['required', 'aria-required="true"']);
+    }
+
+    #[Test]
+    public function it_will_show_disabled_if_set(): void
+    {
+        $view = $this->blade('<x-form-radio name="colour" value="red" disabled />');
+
+        $view->assertSeeHtmlInOrder(['disabled', 'aria-disabled="true"']);
+    }
+
+    #[Test]
     public function it_will_show_readonly_if_set(): void
     {
         $view = $this->blade('<x-form-radio name="colour" value="red" readonly />');
@@ -149,5 +165,13 @@ class FormRadioTest extends TestCase
         $view = $this->blade('<x-form-radio name="colour" value="red" />');
 
         $view->assertSeeHtmlInOrder(['checked']);
+    }
+
+    #[Test]
+    public function it_will_merge_additional_variables(): void
+    {
+        $view = $this->blade('<x-form-radio name="colour" value="red" class="custom-class" />');
+
+        $view->assertSeeHtmlInOrder(['custom-class']);
     }
 }

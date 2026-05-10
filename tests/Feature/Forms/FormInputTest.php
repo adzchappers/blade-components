@@ -127,7 +127,7 @@ class FormInputTest extends TestCase
     }
 
     #[Test]
-    public function submitted_data_changes_default_value(): void
+    public function it_will_repopulate_value_from_old_input(): void
     {
         $this->flashFormData(['email' => 'this-is-a-different-value']);
 
@@ -135,6 +135,14 @@ class FormInputTest extends TestCase
 
         $view->assertSeeHtmlInOrder(['value="this-is-a-different-value"']);
         $view->assertDontSeeHtml(['value="test@example.com"']);
+    }
+
+    #[Test]
+    public function it_will_merge_additional_variables(): void
+    {
+        $view = $this->blade('<x-form-input name="email" class="custom-class" />');
+
+        $view->assertSeeHtmlInOrder(['custom-class']);
     }
 
     #[Test]
@@ -155,6 +163,14 @@ class FormInputTest extends TestCase
     }
 
     #[Test]
+    public function it_will_show_empty_string_placeholder(): void
+    {
+        $view = $this->blade('<x-form-input name="email" placeholder="" />');
+
+        $view->assertSeeHtmlInOrder(['placeholder=""']);
+    }
+
+    #[Test]
     public function it_will_show_value(): void
     {
         $view = $this->blade('<x-form-input name="email" value="test@example.com" />');
@@ -169,5 +185,23 @@ class FormInputTest extends TestCase
 
         $view->assertSeeHtmlInOrder(['<input', 'type="hidden"', 'name="email"']);
         $view->assertDontSeeHtml(['div', 'label']);
+    }
+
+    #[Test]
+    public function it_will_not_show_label_when_hidden(): void
+    {
+        $view = $this->blade('<x-form-input type="hidden" name="email" label="Email" />');
+
+        $view->assertDontSeeHtml('<label');
+    }
+
+    #[Test]
+    public function it_will_not_show_error_when_hidden(): void
+    {
+        $this->shareErrors(['email' => 'Email is required']);
+
+        $view = $this->blade('<x-form-input type="hidden" name="email" />');
+
+        $view->assertDontSeeHtml('text-red-600');
     }
 }

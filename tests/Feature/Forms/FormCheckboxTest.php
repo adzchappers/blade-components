@@ -52,6 +52,14 @@ class FormCheckboxTest extends TestCase
     }
 
     #[Test]
+    public function it_will_show_disabled_if_set(): void
+    {
+        $view = $this->blade('<x-form-checkbox name="agree" disabled />');
+
+        $view->assertSeeHtmlInOrder(['disabled', 'aria-disabled="true"']);
+    }
+
+    #[Test]
     public function it_will_show_readonly_if_set(): void
     {
         $view = $this->blade('<x-form-checkbox name="agree" readonly />');
@@ -147,5 +155,23 @@ class FormCheckboxTest extends TestCase
         $view = $this->blade('<x-form-checkbox name="permissions[]" />');
 
         $view->assertSeeHtmlInOrder(['Permissions are required']);
+    }
+
+    #[Test]
+    public function it_will_be_checked_from_old_input(): void
+    {
+        $this->flashFormData(['agree' => '1']);
+
+        $view = $this->blade('<x-form-checkbox name="agree" value="1" />');
+
+        $view->assertSeeHtmlInOrder(['checked']);
+    }
+
+    #[Test]
+    public function it_will_merge_additional_variables(): void
+    {
+        $view = $this->blade('<x-form-checkbox name="agree" class="custom-class" />');
+
+        $view->assertSeeHtmlInOrder(['custom-class']);
     }
 }

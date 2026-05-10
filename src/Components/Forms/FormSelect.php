@@ -21,7 +21,7 @@ class FormSelect extends FormComponent
         public bool $readonly = false,
         public bool $showError = true,
     ) {
-        if ($oldData = old($this->convertNameToDotNotation(true))) {
+        if (null !== ($oldData = old($this->convertNameToDotNotation(true)))) {
             $this->selected = Arr::wrap($oldData);
         } else {
             $this->selected = Arr::wrap($this->selected);

@@ -12,12 +12,12 @@ class FormRadio extends FormComponent
         public ?string $label = null,
         public ?string $value = '1',
         public bool $checked = false,
+        public bool $required = false,
+        public bool $disabled = false,
         public bool $readonly = false,
         public bool $showError = true,
     ) {
-        // Check to see if there has been a form submission
         if (session()->hasOldInput()) {
-            // TODO: write a test to confirm this
             $this->checked = (old($this->convertNameToDotNotation(true)) == $value);
         }
     }
