@@ -15,7 +15,7 @@ class FormRadioTest extends TestCase
     use InteractsWithFlashedData;
 
     #[Test]
-    public function it_shows_default_values()
+    public function it_shows_default_values(): void
     {
         $view = $this->blade('<x-form-radio name="colour" value="red" />');
 
@@ -24,7 +24,7 @@ class FormRadioTest extends TestCase
     }
 
     #[Test]
-    public function it_will_show_as_checked_when_checked_is_true()
+    public function it_will_show_as_checked_when_checked_is_true(): void
     {
         $view = $this->blade('<x-form-radio name="colour" value="red" :checked="true" />');
 
@@ -32,7 +32,7 @@ class FormRadioTest extends TestCase
     }
 
     #[Test]
-    public function it_will_not_show_as_checked_if_checked_but_form_submission_unchecks()
+    public function it_will_not_show_as_checked_if_checked_but_form_submission_unchecks(): void
     {
         // Set a different key/value for a fake form submission
         // This is so that we can fake the request old data
@@ -44,7 +44,7 @@ class FormRadioTest extends TestCase
     }
 
     #[Test]
-    public function it_will_show_readonly_if_set()
+    public function it_will_show_readonly_if_set(): void
     {
         $view = $this->blade('<x-form-radio name="colour" value="red" readonly />');
 
@@ -52,7 +52,15 @@ class FormRadioTest extends TestCase
     }
 
     #[Test]
-    public function it_will_show_a_label()
+    public function it_will_generate_id(): void
+    {
+        $view = $this->blade('<x-form-radio name="colour" value="red" />');
+
+        $view->assertSeeHtmlInOrder(['<input', 'id="', 'type="radio"']);
+    }
+
+    #[Test]
+    public function it_will_show_a_label(): void
     {
         $view = $this->blade('<x-form-radio name="colour" value="red" label="Red" />');
 
@@ -69,7 +77,7 @@ class FormRadioTest extends TestCase
     }
 
     #[Test]
-    public function it_will_have_the_same_id_as_label()
+    public function it_will_have_the_same_id_as_label(): void
     {
         $view = $this->blade('<x-form-radio name="colour" value="red" label="Red" id="colour-red" />');
 
@@ -86,7 +94,7 @@ class FormRadioTest extends TestCase
     }
 
     #[Test]
-    public function it_wont_show_label_if_not_set()
+    public function it_wont_show_label_if_not_set(): void
     {
         $view = $this->blade('<x-form-radio name="colour" value="red" />');
 
@@ -121,5 +129,25 @@ class FormRadioTest extends TestCase
         $view = $this->blade('<x-form-radio name="colour" value="red" />');
 
         $view->assertDontSeeHtml('text-red-600');
+    }
+
+    #[Test]
+    public function it_will_convert_array_to_dot_notation_for_error(): void
+    {
+        $this->shareErrors(['colours' => 'Colours are required']);
+
+        $view = $this->blade('<x-form-radio name="colours[]" value="red" />');
+
+        $view->assertSeeHtmlInOrder(['Colours are required']);
+    }
+
+    #[Test]
+    public function it_will_be_checked_from_old_input(): void
+    {
+        $this->flashFormData(['colour' => 'red']);
+
+        $view = $this->blade('<x-form-radio name="colour" value="red" />');
+
+        $view->assertSeeHtmlInOrder(['checked']);
     }
 }

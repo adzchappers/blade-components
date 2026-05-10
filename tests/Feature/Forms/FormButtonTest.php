@@ -10,7 +10,7 @@ use Tests\TestCase;
 class FormButtonTest extends TestCase
 {
     #[Test]
-    public function it_shows_default_values()
+    public function it_shows_default_values(): void
     {
         $view = $this->blade('<x-form-button></x-form-button>');
 
@@ -18,7 +18,7 @@ class FormButtonTest extends TestCase
     }
 
     #[Test]
-    public function it_shows_type_button()
+    public function it_shows_type_button(): void
     {
         $view = $this->blade('<x-form-button type="button">Cancel</x-form-button>');
 
@@ -26,7 +26,7 @@ class FormButtonTest extends TestCase
     }
 
     #[Test]
-    public function it_shows_type_reset()
+    public function it_shows_type_reset(): void
     {
         $view = $this->blade('<x-form-button type="reset">Reset</x-form-button>');
 
@@ -34,7 +34,7 @@ class FormButtonTest extends TestCase
     }
 
     #[Test]
-    public function it_will_fallback_to_type_submit()
+    public function it_will_fallback_to_type_submit(): void
     {
         $view = $this->blade('<x-form-button type="invalid">Save</x-form-button>');
 

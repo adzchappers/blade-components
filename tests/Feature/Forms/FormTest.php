@@ -10,7 +10,7 @@ use Tests\TestCase;
 class FormTest extends TestCase
 {
     #[Test]
-    public function it_shows_default_values()
+    public function it_shows_default_values(): void
     {
         $view = $this->blade('<x-form>Test Content</x-form>');
 
@@ -24,7 +24,7 @@ class FormTest extends TestCase
     }
 
     #[Test]
-    public function it_will_show_post_method()
+    public function it_will_show_post_method(): void
     {
         $view = $this->blade('<x-form method="POST">Test Content</x-form>');
 
@@ -38,7 +38,7 @@ class FormTest extends TestCase
     }
 
     #[Test]
-    public function it_will_show_get_method()
+    public function it_will_show_get_method(): void
     {
         $view = $this->blade('<x-form method="GET">Test Content</x-form>');
 
@@ -52,7 +52,7 @@ class FormTest extends TestCase
     }
 
     #[Test]
-    public function it_will_show_put_method_spoofing()
+    public function it_will_show_put_method_spoofing(): void
     {
         $view = $this->blade('<x-form method="PUT">Test Content</x-form>');
 
@@ -65,7 +65,7 @@ class FormTest extends TestCase
     }
 
     #[Test]
-    public function it_will_show_patch_method_spoofing()
+    public function it_will_show_patch_method_spoofing(): void
     {
         $view = $this->blade('<x-form method="PATCH">Test Content</x-form>');
 
@@ -78,7 +78,7 @@ class FormTest extends TestCase
     }
 
     #[Test]
-    public function it_will_show_delete_method_spoofing()
+    public function it_will_show_delete_method_spoofing(): void
     {
         $view = $this->blade('<x-form method="DELETE">Test Content</x-form>');
 
@@ -91,7 +91,7 @@ class FormTest extends TestCase
     }
 
     #[Test]
-    public function it_will_show_file_upload()
+    public function it_will_show_file_upload(): void
     {
         $view = $this->blade('<x-form has-files="true">Test Content</x-form>');
 

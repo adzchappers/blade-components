@@ -2,7 +2,7 @@
     @if ($label)
         <x-form-label
             label="{{ $label }}"
-            required="{{ $label }}"
+            required="{{ $required }}"
             for="{{ $id() }}"
             class="{{ $hasError() ? 'error' : '' }}"
             />

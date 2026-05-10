@@ -15,16 +15,7 @@ class FormInputTest extends TestCase
     use InteractsWithFlashedData;
 
     #[Test]
-    public function it_will_show_hidden_and_only_hidden()
-    {
-        $view = $this->blade('<x-form-input type="hidden" name="email" />');
-
-        $view->assertSeeHtmlInOrder(['<input', 'type="hidden"', 'name="email"']);
-        $view->assertDontSeeHtml(['div', 'label']);
-    }
-
-    #[Test]
-    public function it_will_show_with_required_name()
+    public function it_shows_default_values(): void
     {
         $view = $this->blade('<x-form-input name="email" />');
 
@@ -32,32 +23,7 @@ class FormInputTest extends TestCase
     }
 
     #[Test]
-    public function it_will_show_other_types()
-    {
-        $view = $this->blade('<x-form-input name="email" type="email" />');
-
-        $view->assertSeeHtmlInOrder(['<input', 'type="email"', 'name="email"']);
-        $view->assertDontSeeHtml('type="text"');
-    }
-
-    #[Test]
-    public function it_will_show_placeholder()
-    {
-        $view = $this->blade('<x-form-input name="email" placeholder="Enter email" />');
-
-        $view->assertSeeHtmlInOrder(['placeholder="Enter email"']);
-    }
-
-    #[Test]
-    public function it_will_show_value()
-    {
-        $view = $this->blade('<x-form-input name="email" value="test@example.com" />');
-
-        $view->assertSeeHtmlInOrder(['value="test@example.com"']);
-    }
-
-    #[Test]
-    public function it_will_show_required_if_set()
+    public function it_will_show_required_if_set(): void
     {
         $view = $this->blade('<x-form-input name="email" required />');
 
@@ -65,7 +31,7 @@ class FormInputTest extends TestCase
     }
 
     #[Test]
-    public function it_will_show_disabled_if_set()
+    public function it_will_show_disabled_if_set(): void
     {
         $view = $this->blade('<x-form-input name="email" disabled />');
 
@@ -73,7 +39,7 @@ class FormInputTest extends TestCase
     }
 
     #[Test]
-    public function it_will_show_readonly_if_set()
+    public function it_will_show_readonly_if_set(): void
     {
         $view = $this->blade('<x-form-input name="email" readonly />');
 
@@ -81,7 +47,7 @@ class FormInputTest extends TestCase
     }
 
     #[Test]
-    public function it_will_generate_id()
+    public function it_will_generate_id(): void
     {
         $view = $this->blade('<x-form-input name="email" />');
 
@@ -89,7 +55,7 @@ class FormInputTest extends TestCase
     }
 
     #[Test]
-    public function it_will_show_a_label()
+    public function it_will_show_a_label(): void
     {
         $view = $this->blade('<x-form-input name="email" label="Email address" />');
 
@@ -97,7 +63,7 @@ class FormInputTest extends TestCase
     }
 
     #[Test]
-    public function it_will_have_the_same_id_as_label()
+    public function it_will_have_the_same_id_as_label(): void
     {
         $view = $this->blade('<x-form-input name="email" label="Email address" id="email-field" />');
 
@@ -113,7 +79,7 @@ class FormInputTest extends TestCase
     }
 
     #[Test]
-    public function it_wont_show_label_if_not_set()
+    public function it_wont_show_label_if_not_set(): void
     {
         $view = $this->blade('<x-form-input name="email" />');
 
@@ -161,7 +127,7 @@ class FormInputTest extends TestCase
     }
 
     #[Test]
-    public function submitted_data_changes_default_value()
+    public function submitted_data_changes_default_value(): void
     {
         $this->flashFormData(['email' => 'this-is-a-different-value']);
 
@@ -169,5 +135,39 @@ class FormInputTest extends TestCase
 
         $view->assertSeeHtmlInOrder(['value="this-is-a-different-value"']);
         $view->assertDontSeeHtml(['value="test@example.com"']);
+    }
+
+    #[Test]
+    public function it_will_show_other_types(): void
+    {
+        $view = $this->blade('<x-form-input name="email" type="email" />');
+
+        $view->assertSeeHtmlInOrder(['<input', 'type="email"', 'name="email"']);
+        $view->assertDontSeeHtml('type="text"');
+    }
+
+    #[Test]
+    public function it_will_show_placeholder(): void
+    {
+        $view = $this->blade('<x-form-input name="email" placeholder="Enter email" />');
+
+        $view->assertSeeHtmlInOrder(['placeholder="Enter email"']);
+    }
+
+    #[Test]
+    public function it_will_show_value(): void
+    {
+        $view = $this->blade('<x-form-input name="email" value="test@example.com" />');
+
+        $view->assertSeeHtmlInOrder(['value="test@example.com"']);
+    }
+
+    #[Test]
+    public function it_will_show_hidden_and_only_hidden(): void
+    {
+        $view = $this->blade('<x-form-input type="hidden" name="email" />');
+
+        $view->assertSeeHtmlInOrder(['<input', 'type="hidden"', 'name="email"']);
+        $view->assertDontSeeHtml(['div', 'label']);
     }
 }
