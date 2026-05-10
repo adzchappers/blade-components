@@ -15,15 +15,16 @@ class FormCheckboxTest extends TestCase
     use InteractsWithFlashedData;
 
     #[Test]
-    public function renders_with_name_and_value()
+    public function it_shows_default_values()
     {
         $view = $this->blade('<x-form-checkbox name="agree" value="1" />');
 
         $view->assertSeeHtmlInOrder(['type="checkbox"', 'name="agree"', 'value="1"']);
+        $view->assertDontSeeHtml(['checked', '<label']);
     }
 
     #[Test]
-    public function renders_checked_when_checked_is_true()
+    public function it_will_show_as_checked_when_checked_is_true()
     {
         $view = $this->blade('<x-form-checkbox name="agree" :checked="true" />');
 
@@ -31,7 +32,7 @@ class FormCheckboxTest extends TestCase
     }
 
     #[Test]
-    public function renders_unchecked_when_default_was_checked_but_submitted_unchecked()
+    public function it_will_not_show_as_checked_if_checked_but_form_submission_unchecks()
     {
         // Set a different key/value for a fake form submission
         // This is so that we can fake the request old data
@@ -43,17 +44,7 @@ class FormCheckboxTest extends TestCase
     }
 
     #[Test]
-    public function renders_without_checked_if_not_checked()
-    {
-        $view = $this->blade('<x-form-checkbox name="agree" :checked="false" />');
-
-        $view->assertSeeHtmlInOrder(['type="checkbox"', 'name="agree"', 'value="1"']);
-
-        $view->assertDontSeeHtml('checked');
-    }
-
-    #[Test]
-    public function renders_required_with_aria()
+    public function it_will_show_required_if_set()
     {
         $view = $this->blade('<x-form-checkbox name="agree" required />');
 
@@ -61,7 +52,7 @@ class FormCheckboxTest extends TestCase
     }
 
     #[Test]
-    public function renders_readonly_with_aria()
+    public function it_will_show_readonly_if_set()
     {
         $view = $this->blade('<x-form-checkbox name="agree" readonly />');
 
@@ -69,22 +60,24 @@ class FormCheckboxTest extends TestCase
     }
 
     #[Test]
-    public function renders_with_label()
+    public function it_will_show_a_label()
     {
         $view = $this->blade('<x-form-checkbox name="agree" label="I agree to the terms" />');
 
         $view->assertSeeHtmlInOrder([
+            'id="',
             'type="checkbox"',
             'name="agree"',
             'value="1"',
             '<label',
+            'for="',
             'I agree to the terms',
             '</label>',
         ]);
     }
 
     #[Test]
-    public function renders_with_label_matching_id()
+    public function it_will_have_the_same_id_as_label()
     {
         $view = $this->blade('<x-form-checkbox name="agree" label="Agree" id="agree-checkbox" />');
 
@@ -101,47 +94,31 @@ class FormCheckboxTest extends TestCase
     }
 
     #[Test]
-    public function renders_with_generated_id_when_not_provided()
-    {
-        $view = $this->blade('<x-form-checkbox name="agree" label="Agree" />');
-
-        $view->assertSeeHtmlInOrder(['id="', '<label', 'for="', 'Agree', '</label>']);
-    }
-
-    #[Test]
-    public function renders_without_label_when_not_provided()
-    {
-        $view = $this->blade('<x-form-checkbox name="agree" />');
-
-        $view->assertDontSeeHtml('<label');
-    }
-
-    #[Test]
-    public function renders_without_error_by_default(): void
+    public function it_shows_errors_as_default(): void
     {
         $this->shareErrors(['agree' => 'You must agree']);
 
         $view = $this->blade('<x-form-checkbox name="agree" />');
-
-        $view->assertDontSeeHtml('text-red-600');
-    }
-
-    #[Test]
-    public function renders_with_error_when_show_errors_is_true(): void
-    {
-        $this->shareErrors(['agree' => 'You must agree']);
-
-        $view = $this->blade('<x-form-checkbox name="agree" show-error />');
 
         $view->assertSeeHtmlInOrder(['text-red-600', 'You must agree']);
     }
 
     #[Test]
-    public function renders_without_error_when_field_has_no_errors(): void
+    public function it_will_not_show_errors_if_false(): void
+    {
+        $this->shareErrors(['agree' => 'You must agree']);
+
+        $view = $this->blade('<x-form-checkbox name="agree" :show-error="false" />');
+
+        $view->assertDontSeeHtml('text-red-600');
+    }
+
+    #[Test]
+    public function it_doesnt_show_errors_if_input_has_none(): void
     {
         $this->shareErrors(['name' => 'Name is required']);
 
-        $view = $this->blade('<x-form-checkbox name="agree" show-error />');
+        $view = $this->blade('<x-form-checkbox name="agree" />');
 
         $view->assertDontSeeHtml('text-red-600');
     }

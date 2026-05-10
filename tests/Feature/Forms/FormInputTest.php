@@ -15,7 +15,7 @@ class FormInputTest extends TestCase
     use InteractsWithFlashedData;
 
     #[Test]
-    public function renders_hidden_and_only_hidden()
+    public function it_will_show_hidden_and_only_hidden()
     {
         $view = $this->blade('<x-form-input type="hidden" name="email" />');
 
@@ -24,7 +24,7 @@ class FormInputTest extends TestCase
     }
 
     #[Test]
-    public function renders_with_required_name()
+    public function it_will_show_with_required_name()
     {
         $view = $this->blade('<x-form-input name="email" />');
 
@@ -32,7 +32,7 @@ class FormInputTest extends TestCase
     }
 
     #[Test]
-    public function renders_with_custom_type()
+    public function it_will_show_other_types()
     {
         $view = $this->blade('<x-form-input name="email" type="email" />');
 
@@ -41,7 +41,7 @@ class FormInputTest extends TestCase
     }
 
     #[Test]
-    public function renders_with_placeholder()
+    public function it_will_show_placeholder()
     {
         $view = $this->blade('<x-form-input name="email" placeholder="Enter email" />');
 
@@ -49,7 +49,7 @@ class FormInputTest extends TestCase
     }
 
     #[Test]
-    public function renders_with_value()
+    public function it_will_show_value()
     {
         $view = $this->blade('<x-form-input name="email" value="test@example.com" />');
 
@@ -57,7 +57,7 @@ class FormInputTest extends TestCase
     }
 
     #[Test]
-    public function input_component_renders_required_with_aria()
+    public function it_will_show_required_if_set()
     {
         $view = $this->blade('<x-form-input name="email" required />');
 
@@ -65,7 +65,7 @@ class FormInputTest extends TestCase
     }
 
     #[Test]
-    public function renders_disabled_with_aria()
+    public function it_will_show_disabled_if_set()
     {
         $view = $this->blade('<x-form-input name="email" disabled />');
 
@@ -73,7 +73,7 @@ class FormInputTest extends TestCase
     }
 
     #[Test]
-    public function renders_readonly_with_aria()
+    public function it_will_show_readonly_if_set()
     {
         $view = $this->blade('<x-form-input name="email" readonly />');
 
@@ -81,7 +81,7 @@ class FormInputTest extends TestCase
     }
 
     #[Test]
-    public function renders_with_generated_id()
+    public function it_will_generate_id()
     {
         $view = $this->blade('<x-form-input name="email" />');
 
@@ -89,7 +89,7 @@ class FormInputTest extends TestCase
     }
 
     #[Test]
-    public function renders_label()
+    public function it_will_show_a_label()
     {
         $view = $this->blade('<x-form-input name="email" label="Email address" />');
 
@@ -97,7 +97,7 @@ class FormInputTest extends TestCase
     }
 
     #[Test]
-    public function renders_label_for_matches_input_id()
+    public function it_will_have_the_same_id_as_label()
     {
         $view = $this->blade('<x-form-input name="email" label="Email address" id="email-field" />');
 
@@ -113,7 +113,7 @@ class FormInputTest extends TestCase
     }
 
     #[Test]
-    public function does_not_render_label_when_not_provided()
+    public function it_wont_show_label_if_not_set()
     {
         $view = $this->blade('<x-form-input name="email" />');
 
@@ -121,37 +121,37 @@ class FormInputTest extends TestCase
     }
 
     #[Test]
-    public function does_not_show_error_by_default(): void
+    public function it_shows_errors_as_default(): void
     {
         $this->shareErrors(['email' => 'Email is required']);
 
         $view = $this->blade('<x-form-input name="email" />');
 
-        $view->assertDontSeeHtml(['text-red-600', 'Email is required']);
-    }
-
-    #[Test]
-    public function shows_error_when_show_errors_is_true(): void
-    {
-        $this->shareErrors(['email' => 'Email is required']);
-
-        $view = $this->blade('<x-form-input name="email" show-error />');
-
         $view->assertSeeHtmlInOrder(['text-red-600', 'Email is required']);
     }
 
     #[Test]
-    public function does_not_show_error_when_field_has_no_errors(): void
+    public function it_will_not_show_errors_if_false(): void
+    {
+        $this->shareErrors(['email' => 'Email is required']);
+
+        $view = $this->blade('<x-form-input name="email" :show-error="false" />');
+
+        $view->assertDontSeeHtml(['text-red-600', 'Email is required']);
+    }
+
+    #[Test]
+    public function it_doesnt_show_errors_if_input_has_none(): void
     {
         $this->shareErrors(['name' => 'Name is required']);
 
-        $view = $this->blade('<x-form-input name="email" show-error />');
+        $view = $this->blade('<x-form-input name="email" />');
 
         $view->assertDontSeeHtml(['text-red-600', 'Name is required']);
     }
 
     #[Test]
-    public function strips_array_notation_for_error_lookup(): void
+    public function it_will_convert_array_to_dot_notation_for_error(): void
     {
         $this->shareErrors(['tags' => 'Tags are required']);
 

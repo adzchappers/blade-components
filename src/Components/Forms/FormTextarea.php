@@ -8,14 +8,14 @@ class FormTextarea extends FormComponent
 {
     public function __construct(
         public string $name,
-        public ?string $id,
+        public ?string $id = null,
         public ?string $label = null,
-        public ?string $placeholder = null,
+        public ?string $placeholder = null, // TODO: Need to do something with this
         public ?string $value = null,
         public bool $disabled = false,
         public bool $required = false,
         public bool $readonly = false,
-        public bool $showError = false,
+        public bool $showError = true,
     ) {
         $this->setValue($this->value);
     }

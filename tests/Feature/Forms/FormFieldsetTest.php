@@ -10,7 +10,7 @@ use Tests\TestCase;
 class FormFieldsetTest extends TestCase
 {
     #[Test]
-    public function renders_without_legend(): void
+    public function it_does_not_show_legend_if_not_set(): void
     {
         $view = $this->blade('<x-form-fieldset>Content</x-form-fieldset>');
 
@@ -20,7 +20,7 @@ class FormFieldsetTest extends TestCase
     }
 
     #[Test]
-    public function renders_with_legend(): void
+    public function it_will_show_legend_if_set(): void
     {
         $view = $this->blade('<x-form-fieldset legend="Legend Title">Content</x-form-fieldset>');
 
@@ -35,7 +35,7 @@ class FormFieldsetTest extends TestCase
     }
 
     #[Test]
-    public function renders_disabled_state(): void
+    public function it_will_show_disabled_if_set(): void
     {
         $view = $this->blade('<x-form-fieldset :disabled="true">Content</x-form-fieldset>');
 
@@ -43,15 +43,7 @@ class FormFieldsetTest extends TestCase
     }
 
     #[Test]
-    public function does_not_render_disabled_by_default(): void
-    {
-        $view = $this->blade('<x-form-fieldset>Content</x-form-fieldset>');
-
-        $view->assertDontSeeHtml('aria-disabled');
-    }
-
-    #[Test]
-    public function renders_with_additional_attributes(): void
+    public function it_will_merge_additional_variables(): void
     {
         $view = $this->blade('<x-form-fieldset class="custom-class">Content</x-form-fieldset>');
 

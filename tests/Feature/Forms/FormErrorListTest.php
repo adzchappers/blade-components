@@ -13,7 +13,7 @@ class FormErrorListTest extends TestCase
     use InteractsWithErrors;
 
     #[Test]
-    public function does_not_render_when_no_errors(): void
+    public function it_will_not_show_if_no_errors(): void
     {
         $this->shareErrors();
 
@@ -23,7 +23,7 @@ class FormErrorListTest extends TestCase
     }
 
     #[Test]
-    public function renders_all_errors_from_default_bag(): void
+    public function it_shows_errors_from_default_bag(): void
     {
         $this->shareErrors(['email' => 'Email is required', 'name' => 'Name is required']);
 
@@ -40,7 +40,7 @@ class FormErrorListTest extends TestCase
     }
 
     #[Test]
-    public function renders_errors_from_named_bag(): void
+    public function it_shows_errors_from_named_bag(): void
     {
         $this->shareErrors(['email' => 'Email is required'], 'login');
 
@@ -50,7 +50,7 @@ class FormErrorListTest extends TestCase
     }
 
     #[Test]
-    public function does_not_render_errors_from_wrong_bag(): void
+    public function it_will_not_show_errors_from_other_bags(): void
     {
         $this->shareErrors(['email' => 'Email is required']);
 
@@ -60,7 +60,7 @@ class FormErrorListTest extends TestCase
     }
 
     #[Test]
-    public function renders_with_additional_attributes(): void
+    public function it_will_merge_additional_variables(): void
     {
         $this->shareErrors(['email' => 'Email is required']);
 

@@ -10,16 +10,16 @@ class FormSelect extends FormComponent
 {
     public function __construct(
         public string $name,
-        public ?string $id,
+        public ?string $id = null,
         public ?string $label = null,
-        public ?string $placeholder = null,
+        public ?string $placeholder = null, // TODO: Need to put this somewhere
         public array $options = [],
         public bool $multiple = false,
         public array | string | null $selected = null,
         public bool $disabled = false,
         public bool $required = false,
         public bool $readonly = false,
-        public bool $showError = false,
+        public bool $showError = true,
     ) {
         if ($oldData = old($this->convertNameToDotNotation(true))) {
             $this->selected = Arr::wrap($oldData);

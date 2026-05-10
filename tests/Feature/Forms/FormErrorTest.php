@@ -13,7 +13,7 @@ class FormErrorTest extends TestCase
     use InteractsWithErrors;
 
     #[Test]
-    public function does_not_render_when_field_has_no_errors(): void
+    public function it_will_not_show_if_no_errors(): void
     {
         $this->shareErrors();
 
@@ -23,7 +23,7 @@ class FormErrorTest extends TestCase
     }
 
     #[Test]
-    public function renders_first_error_for_field(): void
+    public function it_will_show_first_error_for_a_field(): void
     {
         $this->shareErrors(['email' => 'Email is required']);
 
@@ -33,7 +33,7 @@ class FormErrorTest extends TestCase
     }
 
     #[Test]
-    public function does_not_render_when_different_field_has_errors(): void
+    public function it_will_not_show_error_for_other_field(): void
     {
         $this->shareErrors(['name' => 'Name is required']);
 
@@ -43,7 +43,7 @@ class FormErrorTest extends TestCase
     }
 
     #[Test]
-    public function renders_from_named_bag(): void
+    public function it_shows_errors_from_named_bag(): void
     {
         $this->shareErrors(['email' => 'Email is required'], 'login');
 
@@ -53,7 +53,7 @@ class FormErrorTest extends TestCase
     }
 
     #[Test]
-    public function does_not_render_from_wrong_bag(): void
+    public function it_will_not_show_errors_from_other_bags(): void
     {
         $this->shareErrors(['email' => 'Email is required']);
 
@@ -63,7 +63,7 @@ class FormErrorTest extends TestCase
     }
 
     #[Test]
-    public function renders_with_stripped_array_notation_from_name(): void
+    public function it_will_strip_array_notatin_to_display_error(): void
     {
         $this->shareErrors(['permissions' => 'Permissions are required']);
 
@@ -73,7 +73,7 @@ class FormErrorTest extends TestCase
     }
 
     #[Test]
-    public function renders_with_converted_array_notation_from_name(): void
+    public function it_will_convert_array_to_dot_notation_for_error(): void
     {
         $this->shareErrors(['permissions.edit' => 'Edit permission is required']);
 
@@ -83,7 +83,7 @@ class FormErrorTest extends TestCase
     }
 
     #[Test]
-    public function renders_with_additional_attributes(): void
+    public function it_will_merge_additional_variables(): void
     {
         $this->shareErrors(['email' => 'Email is required']);
 

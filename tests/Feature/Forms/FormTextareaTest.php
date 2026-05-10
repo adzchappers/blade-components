@@ -13,23 +13,20 @@ class FormTextareaTest extends TestCase
     use InteractsWithErrors;
 
     #[Test]
-    public function renders_with_name()
-    {
-        $view = $this->blade('<x-form-textarea name="description" />');
-
-        $view->assertSeeHtmlInOrder(['<textarea', 'name="description"']);
-    }
-
-    #[Test]
-    public function _renders_value()
+    public function it_shows_default_values()
     {
         $view = $this->blade('<x-form-textarea name="description" value="Some text" />');
 
-        $view->assertSeeHtmlInOrder(['Some text']);
+        $view->assertSeeHtmlInOrder([
+            '<textarea',
+            'name="description"',
+            'Some text',
+            '</textarea>'
+        ]);
     }
 
     #[Test]
-    public function renders_required_with_aria()
+    public function it_will_show_required_if_set()
     {
         $view = $this->blade('<x-form-textarea name="description" required />');
 
@@ -37,7 +34,7 @@ class FormTextareaTest extends TestCase
     }
 
     #[Test]
-    public function renders_readonly_with_aria()
+    public function it_will_show_readonly_if_set()
     {
         $view = $this->blade('<x-form-textarea name="description" readonly />');
 
@@ -45,23 +42,37 @@ class FormTextareaTest extends TestCase
     }
 
     #[Test]
-    public function renders_label()
+    public function it_will_show_a_label()
     {
         $view = $this->blade('<x-form-textarea name="description" label="Description" />');
 
-        $view->assertSeeHtmlInOrder(['<label', 'Description']);
+        $view->assertSeeHtmlInOrder([
+            '<label',
+            'Description',
+            '</label>',
+            '<textarea',
+            '</textarea>',
+        ]);
     }
 
     #[Test]
-    public function renders_label_for_matches_textarea_id()
+    public function it_will_have_the_same_id_as_label()
     {
         $view = $this->blade('<x-form-textarea name="description" label="Description" id="desc" />');
 
-        $view->assertSeeHtmlInOrder(['for="desc"', 'id="desc"']);
+        $view->assertSeeHtmlInOrder([
+            '<label',
+            'for="desc"',
+            'Description',
+            '</label>',
+            '<textarea',
+            'id="desc"',
+            '</textarea>',
+        ]);
     }
 
     #[Test]
-    public function does_not_render_label_when_not_provided()
+    public function it_wont_show_label_if_not_set()
     {
         $view = $this->blade('<x-form-textarea name="description" />');
 
@@ -69,32 +80,32 @@ class FormTextareaTest extends TestCase
     }
 
     #[Test]
-    public function does_not_show_error_by_default(): void
+    public function it_shows_errors_as_default(): void
     {
         $this->shareErrors(['description' => 'Description is required']);
 
         $view = $this->blade('<x-form-textarea name="description" />');
 
-        $view->assertDontSeeHtml('text-red-600');
-    }
-
-    #[Test]
-    public function renders_shows_error_when_show_errors_is_true(): void
-    {
-        $this->shareErrors(['description' => 'Description is required']);
-
-        $view = $this->blade('<x-form-textarea name="description" show-error />');
-
         $view->assertSeeHtmlInOrder(['text-red-600', 'Description is required']);
     }
 
     #[Test]
-    public function does_not_show_error_when_field_has_no_errors(): void
+    public function it_will_not_show_errors_if_false(): void
+    {
+        $this->shareErrors(['description' => 'Description is required']);
+
+        $view = $this->blade('<x-form-textarea name="description" :show-error="false" />');
+
+        $view->assertDontSeeHtml(['text-red-600', 'Description is required']);
+    }
+
+    #[Test]
+    public function it_doesnt_show_errors_if_input_has_none(): void
     {
         $this->shareErrors(['name' => 'Name is required']);
 
         $view = $this->blade('<x-form-textarea name="description" show-error />');
 
-        $view->assertDontSeeHtml('text-red-600');
+        $view->assertDontSeeHtml(['text-red-600', 'Name is required']);
     }
 }

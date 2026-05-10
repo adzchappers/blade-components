@@ -8,7 +8,7 @@ class FormInput extends FormComponent
 {
     public function __construct(
         public string $name,
-        public ?string $id,
+        public ?string $id = null,
         public ?string $label = null,
         public string $type = 'text',
         public ?string $placeholder = null,
@@ -16,7 +16,7 @@ class FormInput extends FormComponent
         public bool $disabled = false,
         public bool $required = false,
         public bool $readonly = false,
-        public bool $showError = false,
+        public bool $showError = true,
     ) {
         $this->setValue($this->value);
     }

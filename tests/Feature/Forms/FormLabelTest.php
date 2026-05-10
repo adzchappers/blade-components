@@ -10,7 +10,7 @@ use Tests\TestCase;
 class FormLabelTest extends TestCase
 {
     #[Test]
-    public function renders_with_for_attribute_and_slot_content()
+    public function it_will_show_for_attribute_and_slot_contents()
     {
         $view = $this->blade('<x-form-label for="email">Email address</x-form-label>');
 
@@ -18,7 +18,7 @@ class FormLabelTest extends TestCase
     }
 
     #[Test]
-    public function renders_with_additional_attributes()
+    public function it_will_merge_additional_variables()
     {
         $view = $this->blade('<x-form-label for="email" class="font-bold">Email</x-form-label>');
 

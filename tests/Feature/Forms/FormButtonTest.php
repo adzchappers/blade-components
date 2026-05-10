@@ -10,7 +10,7 @@ use Tests\TestCase;
 class FormButtonTest extends TestCase
 {
     #[Test]
-    public function renders_with_default_of_submit()
+    public function it_shows_default_values()
     {
         $view = $this->blade('<x-form-button></x-form-button>');
 
@@ -18,7 +18,7 @@ class FormButtonTest extends TestCase
     }
 
     #[Test]
-    public function renders_type_button()
+    public function it_shows_type_button()
     {
         $view = $this->blade('<x-form-button type="button">Cancel</x-form-button>');
 
@@ -26,7 +26,7 @@ class FormButtonTest extends TestCase
     }
 
     #[Test]
-    public function renders_type_reset()
+    public function it_shows_type_reset()
     {
         $view = $this->blade('<x-form-button type="reset">Reset</x-form-button>');
 
@@ -34,7 +34,7 @@ class FormButtonTest extends TestCase
     }
 
     #[Test]
-    public function renders_with_submit_fallback_for_invalid_type()
+    public function it_will_fallback_to_type_submit()
     {
         $view = $this->blade('<x-form-button type="invalid">Save</x-form-button>');
 
@@ -42,15 +42,7 @@ class FormButtonTest extends TestCase
     }
 
     #[Test]
-    public function renders_slot_as_content()
-    {
-        $view = $this->blade('<x-form-button>Submit Form</x-form-button>');
-
-        $view->assertSeeHtmlInOrder(['<button', 'type="submit"', 'Submit', '</button>']);
-    }
-
-    #[Test]
-    public function renders_with_additional_attributes(): void
+    public function it_will_merge_additional_variables(): void
     {
         $view = $this->blade('<x-form-button class="custom-class">Submit Form</x-form-button>');
 

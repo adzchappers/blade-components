@@ -13,15 +13,7 @@ class FormSelectTest extends TestCase
     use InteractsWithErrors;
 
     #[Test]
-    public function renders_with_required_name()
-    {
-        $view = $this->blade('<x-form-select name="country"></x-form-select>');
-
-        $view->assertSeeHtmlInOrder(['<select', 'name="country"']);
-    }
-
-    #[Test]
-    public function renders_options()
+    public function it_shows_default_values(): void
     {
         $view = $this->blade(
             '<x-form-select name="country" :options="$options" />',
@@ -34,13 +26,16 @@ class FormSelectTest extends TestCase
         );
 
         $view->assertSeeHtmlInOrder([
+            '<select',
+            'name="country"',
             '<option value="gb">United Kingdom</option>',
             '<option value="us">United States</option>',
+            '</select>',
         ]);
     }
 
     #[Test]
-    public function renders_required_with_aria()
+    public function it_will_show_required_if_set(): void
     {
         $view = $this->blade('<x-form-select name="country" required></x-form-select>');
 
@@ -48,7 +43,7 @@ class FormSelectTest extends TestCase
     }
 
     #[Test]
-    public function renders_disabled_with_aria()
+    public function it_will_show_disabled_if_set(): void
     {
         $view = $this->blade('<x-form-select name="country" disabled></x-form-select>');
 
@@ -56,7 +51,7 @@ class FormSelectTest extends TestCase
     }
 
     #[Test]
-    public function renders_with_generated_id()
+    public function it_will_generate_id(): void
     {
         $view = $this->blade('<x-form-select name="country"></x-form-select>');
 
@@ -64,23 +59,39 @@ class FormSelectTest extends TestCase
     }
 
     #[Test]
-    public function renders_label()
+    public function it_will_show_a_label(): void
     {
         $view = $this->blade('<x-form-select name="country" label="Country"></x-form-select>');
 
-        $view->assertSeeHtmlInOrder(['<label', 'Country']);
+        $view->assertSeeHtmlInOrder([
+            '<label',
+            'Country',
+            '</label>',
+            '<select',
+            'name="country"',
+            '</select>',
+        ]);
     }
 
     #[Test]
-    public function renders_label_for_matches_select_id()
+    public function it_will_have_the_same_id_as_label(): void
     {
         $view = $this->blade('<x-form-select name="country" label="Country" id="country-select"></x-form-select>');
 
-        $view->assertSeeHtmlInOrder(['for="country-select"', 'id="country-select"']);
+        $view->assertSeeHtmlInOrder([
+            '<label',
+            'for="country-select"',
+            'Country',
+            '</label>',
+            '<select',
+            'id="country-select"',
+            'name="country"',
+            '</select>',
+        ]);
     }
 
     #[Test]
-    public function renders_readonly()
+    public function it_will_show_readonly_if_set(): void
     {
         $view = $this->blade('<x-form-select name="country" readonly></x-form-select>');
 
@@ -88,7 +99,7 @@ class FormSelectTest extends TestCase
     }
 
     #[Test]
-    public function renders_multiple()
+    public function it_will_show_multiple_if_set(): void
     {
         $view = $this->blade('<x-form-select name="countries" multiple></x-form-select>');
 
@@ -96,7 +107,7 @@ class FormSelectTest extends TestCase
     }
 
     #[Test]
-    public function renders_with_option_as_selected_when_selected_string_matches()
+    public function it_will_select_correct_option_when_set_as_string(): void
     {
         $view = $this->blade(
             '<x-form-select name="country" :options="$options" :selected="$selected" />',
@@ -116,7 +127,7 @@ class FormSelectTest extends TestCase
     }
 
     #[Test]
-    public function renders_with_option_as_selected_when_selected_array_matches()
+    public function it_will_select_correct_option_when_set_as_array(): void
     {
         $view = $this->blade(
             '<x-form-select name="country" :options="$options" :selected="$selected" />',
@@ -136,7 +147,7 @@ class FormSelectTest extends TestCase
     }
 
     #[Test]
-    public function renders_with_multiple_option_as_selected_when_selected_array_matches()
+    public function it_will_select_multiple_correct_options_when_set_as_array(): void
     {
         $view = $this->blade(
             '<x-form-select name="country" :options="$options" :selected="$selected" />',
@@ -158,27 +169,27 @@ class FormSelectTest extends TestCase
     }
 
     #[Test]
-    public function does_not_show_error_by_default(): void
+    public function it_shows_errors_as_default(): void
     {
         $this->shareErrors(['country' => 'Country is required']);
 
         $view = $this->blade('<x-form-select name="country"></x-form-select>');
 
-        $view->assertDontSeeHtml('text-red-600');
-    }
-
-    #[Test]
-    public function shows_error_when_show_errors_is_true(): void
-    {
-        $this->shareErrors(['country' => 'Country is required']);
-
-        $view = $this->blade('<x-form-select name="country" show-error></x-form-select>');
-
         $view->assertSeeHtmlInOrder(['text-red-600', 'Country is required']);
     }
 
     #[Test]
-    public function does_not_show_error_when_field_has_no_errors(): void
+    public function it_will_not_show_errors_if_false(): void
+    {
+        $this->shareErrors(['country' => 'Country is required']);
+
+        $view = $this->blade('<x-form-select name="country" :show-error="false"></x-form-select>');
+
+        $view->assertDontSeeHtml(['text-red-600', 'Country is required']);
+    }
+
+    #[Test]
+    public function it_doesnt_show_errors_if_input_has_none(): void
     {
         $this->shareErrors(['name' => 'Name is required']);
 

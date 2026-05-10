@@ -10,7 +10,7 @@ use Tests\TestCase;
 class FormTest extends TestCase
 {
     #[Test]
-    public function renders_with_default_values()
+    public function it_shows_default_values()
     {
         $view = $this->blade('<x-form>Test Content</x-form>');
 
@@ -24,7 +24,21 @@ class FormTest extends TestCase
     }
 
     #[Test]
-    public function renders_with_get_method()
+    public function it_will_show_post_method()
+    {
+        $view = $this->blade('<x-form method="POST">Test Content</x-form>');
+
+        $view->assertSeeHtmlInOrder(['<form method="POST"', 'Test Content']);
+
+        $view->assertDontSeeHtml([
+            'enctype="multipart/form-data"',
+            '<input type="hidden" name="_token" value="" autocomplete="off">',
+            '<input type="hidden" name="_method" value="',
+        ]);
+    }
+
+    #[Test]
+    public function it_will_show_get_method()
     {
         $view = $this->blade('<x-form method="GET">Test Content</x-form>');
 
@@ -38,7 +52,7 @@ class FormTest extends TestCase
     }
 
     #[Test]
-    public function renders_with_put_method_spoofing()
+    public function it_will_show_put_method_spoofing()
     {
         $view = $this->blade('<x-form method="PUT">Test Content</x-form>');
 
@@ -51,7 +65,7 @@ class FormTest extends TestCase
     }
 
     #[Test]
-    public function renders_with_patch_method_spoofing()
+    public function it_will_show_patch_method_spoofing()
     {
         $view = $this->blade('<x-form method="PATCH">Test Content</x-form>');
 
@@ -64,7 +78,7 @@ class FormTest extends TestCase
     }
 
     #[Test]
-    public function renders_with_delete_method_spoofing()
+    public function it_will_show_delete_method_spoofing()
     {
         $view = $this->blade('<x-form method="DELETE">Test Content</x-form>');
 
@@ -77,7 +91,7 @@ class FormTest extends TestCase
     }
 
     #[Test]
-    public function renders_with_file_upload()
+    public function it_will_show_file_upload()
     {
         $view = $this->blade('<x-form has-files="true">Test Content</x-form>');
 

@@ -13,11 +13,11 @@ abstract class FormComponent extends BladeComponent
 
     public string $name;
 
+    public bool $showError;
+
     public ?string $id = null;
 
     public ?string $value = null;
-
-    public bool $showError = false;
 
     /**
      * If the id is set when adding a blade component to a page, then this is

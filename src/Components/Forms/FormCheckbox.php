@@ -16,7 +16,7 @@ class FormCheckbox extends FormComponent
         public bool $checked = false,
         public bool $required = false,
         public bool $readonly = false,
-        public bool $showError = false,
+        public bool $showError = true,
     ) {
         // If checkbox is not checked, HTML forms do not send the input field in
         // the submission - this means blade old with $default will revert to
