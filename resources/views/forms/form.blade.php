@@ -1,6 +1,9 @@
 <form method="{{ $spoofed ? 'POST' : $method }}" {!! $hasFiles ? 'enctype="multipart/form-data"' : '' !!} {!! $attributes->merge() !!}>
-    @if ($spoofed)
+    @unless(in_array($method, ['HEAD', 'GET', 'OPTIONS']))
         @csrf
+    @endunless
+
+    @if ($spoofed)
         @method($method)
     @endif
 

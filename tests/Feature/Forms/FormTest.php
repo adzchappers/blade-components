@@ -14,7 +14,11 @@ class FormTest extends TestCase
     {
         $view = $this->blade('<x-form>Test Content</x-form>');
 
-        $view->assertSeeHtmlInOrder(['<form method="POST"', 'Test Content']);
+        $view->assertSeeHtmlInOrder([
+            '<form method="POST"',
+            '<input type="hidden" name="_token" value="',
+            'Test Content',
+        ]);
 
         $view->assertDontSeeHtml([
             'enctype="multipart/form-data"',
@@ -27,7 +31,11 @@ class FormTest extends TestCase
     {
         $view = $this->blade('<x-form method="POST">Test Content</x-form>');
 
-        $view->assertSeeHtmlInOrder(['<form method="POST"', 'Test Content']);
+        $view->assertSeeHtmlInOrder([
+            '<form method="POST"',
+            '<input type="hidden" name="_token" value="',
+            'Test Content',
+        ]);
 
         $view->assertDontSeeHtml([
             'enctype="multipart/form-data"',
@@ -108,6 +116,7 @@ class FormTest extends TestCase
 
         $view->assertSeeHtmlInOrder([
             '<form method="POST" enctype="multipart/form-data"',
+            '<input type="hidden" name="_token" value="',
             'Test Content',
         ]);
     }
@@ -131,5 +140,20 @@ class FormTest extends TestCase
         $view = $this->blade('<x-form class="custom-class">Test Content</x-form>');
 
         $view->assertSeeHtmlInOrder(['<form', 'custom-class', 'Test Content']);
+    }
+
+    #[Test]
+    public function it_will_not_show_csrf_token_for_options_or_head_methods(): void
+    {
+        foreach (['HEAD', 'OPTIONS'] as $method) {
+            $view = $this->blade('<x-form method="'.$method.'">Test Content</x-form>');
+
+            $view->assertSeeHtmlInOrder(['<form method="'.$method.'"', 'Test Content']);
+
+            $view->assertDontSeeHtml([
+                '<input type="hidden" name="_token" value="',
+                '<input type="hidden" name="_method" value="',
+            ]);
+        }
     }
 }
