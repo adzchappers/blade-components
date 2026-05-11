@@ -146,9 +146,9 @@ class FormTest extends TestCase
     public function it_will_not_show_csrf_token_for_options_or_head_methods(): void
     {
         foreach (['HEAD', 'OPTIONS'] as $method) {
-            $view = $this->blade('<x-form method="'.$method.'">Test Content</x-form>');
+            $view = $this->blade('<x-form method="' . $method . '">Test Content</x-form>');
 
-            $view->assertSeeHtmlInOrder(['<form method="'.$method.'"', 'Test Content']);
+            $view->assertSeeHtmlInOrder(['<form method="' . $method . '"', 'Test Content']);
 
             $view->assertDontSeeHtml([
                 '<input type="hidden" name="_token" value="',
