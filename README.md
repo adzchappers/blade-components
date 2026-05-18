@@ -37,6 +37,23 @@ Optionally publish the configuration file:
 php artisan vendor:publish --tag="blade-components-config"
 ```
 
+## Tailwind CSS
+
+The package's Blade views ship with Tailwind utility classes. For those classes to appear in your compiled CSS, add the package's view directory to your `tailwind.config.js` `content` array:
+
+````js
+// tailwind.config.js
+module.exports = {
+    content: [
+        './resources/**/*.blade.php',
+        './vendor/adzchappers/blade-components/resources/views/**/*.blade.php',
+    ],
+    // ...
+};
+````
+
+The components were built against Tailwind v3 and assume the [`@tailwindcss/forms`](https://github.com/tailwindlabs/tailwindcss-forms) plugin is enabled. Without the plugin the form controls still render, but the default browser appearance might show through in places.
+
 ## Configuration
 
 After publishing, `config/blade-components.php` exposes two keys:
