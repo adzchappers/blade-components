@@ -22,7 +22,7 @@ class FormLabelTest extends TestCase
     {
         $view = $this->blade('<x-form-label for="email" :required="true">Email</x-form-label>');
 
-        $view->assertSeeHtmlInOrder(['Email', '<span>*</span>']);
+        $view->assertSeeHtmlInOrder(['Email', '<span class="text-red-500">*</span>']);
     }
 
     #[Test]
@@ -30,7 +30,7 @@ class FormLabelTest extends TestCase
     {
         $view = $this->blade('<x-form-label for="email">Email</x-form-label>');
 
-        $view->assertDontSeeHtml('<span>*</span>');
+        $view->assertDontSeeHtml('<span class="text-red-500">');
     }
 
     #[Test]

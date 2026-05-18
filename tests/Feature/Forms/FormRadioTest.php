@@ -20,7 +20,7 @@ class FormRadioTest extends TestCase
         $view = $this->blade('<x-form-radio name="colour" value="red" />');
 
         $view->assertSeeHtmlInOrder(['type="radio"', 'name="colour"', 'value="red"']);
-        $view->assertDontSeeHtml(['checked', '<label']);
+        $view->assertDontSeeHtml(['checked ', '<label']);
     }
 
     #[Test]
@@ -28,7 +28,7 @@ class FormRadioTest extends TestCase
     {
         $view = $this->blade('<x-form-radio name="colour" value="red" :checked="true" />');
 
-        $view->assertSeeHtmlInOrder(['type="radio"', 'name="colour"', 'value="red"', 'checked']);
+        $view->assertSeeHtmlInOrder(['type="radio"', 'name="colour"', 'value="red"', 'checked ']);
     }
 
     #[Test]
@@ -40,7 +40,7 @@ class FormRadioTest extends TestCase
 
         $view = $this->blade('<x-form-radio name="colour" value="red" :checked="true" />');
 
-        $view->assertDontSeeHtml('checked');
+        $view->assertDontSeeHtml('checked ');
     }
 
     #[Test]
@@ -164,7 +164,7 @@ class FormRadioTest extends TestCase
 
         $view = $this->blade('<x-form-radio name="colour" value="red" />');
 
-        $view->assertSeeHtmlInOrder(['checked']);
+        $view->assertSeeHtmlInOrder(['checked ']);
     }
 
     #[Test]

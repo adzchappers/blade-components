@@ -11,7 +11,7 @@ class BladeComponentsServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__ . '/../config/blade-components.php' => config_path('blade-components.php'),
-        ]);
+        ], 'blade-components-config');
 
         // Load in the component form views
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'blade-components');

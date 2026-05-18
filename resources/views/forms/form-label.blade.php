@@ -1,6 +1,3 @@
-<label
-    for="{{ $for }}"
-    {{ $attributes->merge(['class' => 'block text-sm font-medium text-gray-900']) }}
->
-    {{ $slot }}@if ($required)<span>*</span>@endif
+<label for="{{ $for }}" {{ $attributes->merge(['class' => 'block text-sm/6 font-medium text-slate-700']) }}>
+    {!! $slot !!}@if ($required)<span class="text-red-500">*</span>@endif
 </label>
