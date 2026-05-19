@@ -21,7 +21,7 @@ A set of javascript free Tailwind-styled Blade components for making building bl
 ## Requirements
 
 - PHP 8.2 or higher
-- Laravel 11 or higher
+- Laravel 12 or higher
 
 ## Installation
 

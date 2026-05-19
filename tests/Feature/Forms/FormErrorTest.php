@@ -19,7 +19,7 @@ class FormErrorTest extends TestCase
 
         $view = $this->blade('<x-form-error name="email" />');
 
-        $view->assertDontSee('<p', false);
+        $view->assertDontSeeHtml('<p');
     }
 
     #[Test]
@@ -29,7 +29,7 @@ class FormErrorTest extends TestCase
 
         $view = $this->blade('<x-form-error name="email" />');
 
-        $view->assertSeeInOrder(['<p', 'Email is required', '</p>'], false);
+        $view->assertSeeHtmlInOrder(['<p', 'Email is required', '</p>']);
     }
 
     #[Test]
@@ -39,7 +39,7 @@ class FormErrorTest extends TestCase
 
         $view = $this->blade('<x-form-error name="email" />');
 
-        $view->assertDontSee(['<p', 'Name is required', '</p>'], false);
+        $view->assertDontSeeHtml(['<p', 'Name is required', '</p>']);
     }
 
     #[Test]
@@ -49,7 +49,7 @@ class FormErrorTest extends TestCase
 
         $view = $this->blade('<x-form-error name="email" bag="login" />');
 
-        $view->assertSeeInOrder(['<p', 'Email is required', '</p>'], false);
+        $view->assertSeeHtmlInOrder(['<p', 'Email is required', '</p>']);
     }
 
     #[Test]
@@ -59,7 +59,7 @@ class FormErrorTest extends TestCase
 
         $view = $this->blade('<x-form-error name="email" bag="login" />');
 
-        $view->assertDontSee('<p', false);
+        $view->assertDontSeeHtml('<p');
     }
 
     #[Test]
@@ -69,7 +69,7 @@ class FormErrorTest extends TestCase
 
         $view = $this->blade('<x-form-error name="permissions[]" />');
 
-        $view->assertSeeInOrder(['<p', 'Permissions are required', '</p>'], false);
+        $view->assertSeeHtmlInOrder(['<p', 'Permissions are required', '</p>']);
     }
 
     #[Test]
@@ -79,7 +79,7 @@ class FormErrorTest extends TestCase
 
         $view = $this->blade('<x-form-error name="permissions[edit]" />');
 
-        $view->assertSeeInOrder(['<p', 'Edit permission is required', '</p>'], false);
+        $view->assertSeeHtmlInOrder(['<p', 'Edit permission is required', '</p>']);
     }
 
     #[Test]
@@ -89,7 +89,7 @@ class FormErrorTest extends TestCase
 
         $view = $this->blade('<x-form-error name="users[0][email]" />');
 
-        $view->assertSeeInOrder(['<p', 'Email is required', '</p>'], false);
+        $view->assertSeeHtmlInOrder(['<p', 'Email is required', '</p>']);
     }
 
     #[Test]
@@ -99,6 +99,6 @@ class FormErrorTest extends TestCase
 
         $view = $this->blade('<x-form-error name="email" class="custom-class" />');
 
-        $view->assertSeeInOrder(['<p', 'class="', 'custom-class'], false);
+        $view->assertSeeHtmlInOrder(['<p', 'class="', 'custom-class']);
     }
 }

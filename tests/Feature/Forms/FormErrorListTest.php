@@ -19,7 +19,7 @@ class FormErrorListTest extends TestCase
 
         $view = $this->blade('<x-form-error-list />');
 
-        $view->assertDontSee(['<div', '<ul'], false);
+        $view->assertDontSeeHtml(['<div', '<ul']);
     }
 
     #[Test]
@@ -29,14 +29,14 @@ class FormErrorListTest extends TestCase
 
         $view = $this->blade('<x-form-error-list />');
 
-        $view->assertSeeInOrder([
+        $view->assertSeeHtmlInOrder([
             '<div',
             'role="alert"',
             '<ul',
             '<li>Email is required</li>',
             '<li>Name is required</li>',
             '</ul>',
-        ], false);
+        ]);
     }
 
     #[Test]
@@ -46,7 +46,7 @@ class FormErrorListTest extends TestCase
 
         $view = $this->blade('<x-form-error-list bag="login" />');
 
-        $view->assertSeeInOrder(['<li>Email is required</li>'], false);
+        $view->assertSeeHtmlInOrder(['<li>Email is required</li>']);
     }
 
     #[Test]
@@ -56,7 +56,7 @@ class FormErrorListTest extends TestCase
 
         $view = $this->blade('<x-form-error-list bag="login" />');
 
-        $view->assertDontSee(['Email is required', '<ul'], false);
+        $view->assertDontSeeHtml(['Email is required', '<ul']);
     }
 
     #[Test]
@@ -66,6 +66,6 @@ class FormErrorListTest extends TestCase
 
         $view = $this->blade('<x-form-error-list class="custom-class" />');
 
-        $view->assertSeeInOrder(['custom-class'], false);
+        $view->assertSeeHtmlInOrder(['custom-class']);
     }
 }

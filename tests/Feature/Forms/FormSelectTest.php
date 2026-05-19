@@ -27,13 +27,13 @@ class FormSelectTest extends TestCase
             ]
         );
 
-        $view->assertSeeInOrder([
+        $view->assertSeeHtmlInOrder([
             '<select',
             'name="country"',
             '<option value="gb">United Kingdom</option>',
             '<option value="us">United States</option>',
             '</select>',
-        ], false);
+        ]);
     }
 
     #[Test]
@@ -41,7 +41,7 @@ class FormSelectTest extends TestCase
     {
         $view = $this->blade('<x-form-select name="country" required></x-form-select>');
 
-        $view->assertSeeInOrder(['required', 'aria-required="true"'], false);
+        $view->assertSeeHtmlInOrder(['required', 'aria-required="true"']);
     }
 
     #[Test]
@@ -49,7 +49,7 @@ class FormSelectTest extends TestCase
     {
         $view = $this->blade('<x-form-select name="country" disabled></x-form-select>');
 
-        $view->assertSeeInOrder(['disabled', 'aria-disabled="true"'], false);
+        $view->assertSeeHtmlInOrder(['disabled', 'aria-disabled="true"']);
     }
 
     #[Test]
@@ -57,7 +57,7 @@ class FormSelectTest extends TestCase
     {
         $view = $this->blade('<x-form-select name="country" readonly></x-form-select>');
 
-        $view->assertSeeInOrder(['tabindex="-1"', 'aria-readonly="true"', 'pointer-events-none'], false);
+        $view->assertSeeHtmlInOrder(['tabindex="-1"', 'aria-readonly="true"', 'pointer-events-none']);
     }
 
     #[Test]
@@ -65,7 +65,7 @@ class FormSelectTest extends TestCase
     {
         $view = $this->blade('<x-form-select name="country"></x-form-select>');
 
-        $view->assertSeeInOrder(['id="'], false);
+        $view->assertSeeHtmlInOrder(['id="']);
     }
 
     #[Test]
@@ -73,14 +73,14 @@ class FormSelectTest extends TestCase
     {
         $view = $this->blade('<x-form-select name="country" label="Country"></x-form-select>');
 
-        $view->assertSeeInOrder([
+        $view->assertSeeHtmlInOrder([
             '<label',
             'Country',
             '</label>',
             '<select',
             'name="country"',
             '</select>',
-        ], false);
+        ]);
     }
 
     #[Test]
@@ -88,7 +88,7 @@ class FormSelectTest extends TestCase
     {
         $view = $this->blade('<x-form-select name="country" label="Country" id="country-select"></x-form-select>');
 
-        $view->assertSeeInOrder([
+        $view->assertSeeHtmlInOrder([
             '<label',
             'for="country-select"',
             'Country',
@@ -97,7 +97,7 @@ class FormSelectTest extends TestCase
             'id="country-select"',
             'name="country"',
             '</select>',
-        ], false);
+        ]);
     }
 
     #[Test]
@@ -105,7 +105,7 @@ class FormSelectTest extends TestCase
     {
         $view = $this->blade('<x-form-select name="country"></x-form-select>');
 
-        $view->assertDontSee('<label', false);
+        $view->assertDontSeeHtml('<label');
     }
 
     #[Test]
@@ -115,7 +115,7 @@ class FormSelectTest extends TestCase
 
         $view = $this->blade('<x-form-select name="country"></x-form-select>');
 
-        $view->assertSeeInOrder(['text-red-600', 'Country is required'], false);
+        $view->assertSeeHtmlInOrder(['text-red-600', 'Country is required']);
     }
 
     #[Test]
@@ -125,7 +125,7 @@ class FormSelectTest extends TestCase
 
         $view = $this->blade('<x-form-select name="country" :show-error="false"></x-form-select>');
 
-        $view->assertDontSee(['text-red-600', 'Country is required'], false);
+        $view->assertDontSeeHtml(['text-red-600', 'Country is required']);
     }
 
     #[Test]
@@ -135,7 +135,7 @@ class FormSelectTest extends TestCase
 
         $view = $this->blade('<x-form-select name="country" show-error></x-form-select>');
 
-        $view->assertDontSee('text-red-600', false);
+        $view->assertDontSeeHtml('text-red-600');
     }
 
     #[Test]
@@ -145,7 +145,7 @@ class FormSelectTest extends TestCase
 
         $view = $this->blade('<x-form-select name="countries[]"></x-form-select>');
 
-        $view->assertSeeInOrder(['Countries are required'], false);
+        $view->assertSeeHtmlInOrder(['Countries are required']);
     }
 
     #[Test]
@@ -164,8 +164,9 @@ class FormSelectTest extends TestCase
             ]
         );
 
-        $view->assertSeeInOrder(['<option value="us" selected>United States</option>'], false);
-        $view->assertDontSee('<option value="gb" selected>', false);
+        $view->assertSeeHtmlInOrder(['<option value="us" selected>United States</option>']);
+
+        $view->assertDontSeeHtml('<option value="gb" selected>');
     }
 
     #[Test]
@@ -173,7 +174,7 @@ class FormSelectTest extends TestCase
     {
         $view = $this->blade('<x-form-select name="country" class="custom-class"></x-form-select>');
 
-        $view->assertSeeInOrder(['custom-class'], false);
+        $view->assertSeeHtmlInOrder(['custom-class']);
     }
 
     #[Test]
@@ -181,7 +182,7 @@ class FormSelectTest extends TestCase
     {
         $view = $this->blade('<x-form-select name="countries" multiple></x-form-select>');
 
-        $view->assertSeeInOrder(['name="countries[]"', 'multiple'], false);
+        $view->assertSeeHtmlInOrder(['name="countries[]"', 'multiple']);
     }
 
     #[Test]
@@ -197,7 +198,7 @@ class FormSelectTest extends TestCase
             ]
         );
 
-        $view->assertDontSee(['<option value="gb" selected>', '<option value="us" selected>'], false);
+        $view->assertDontSeeHtml(['<option value="gb" selected>', '<option value="us" selected>']);
     }
 
     #[Test]
@@ -216,8 +217,9 @@ class FormSelectTest extends TestCase
             ]
         );
 
-        $view->assertSeeInOrder(['<option value="0" selected>Unknown</option>'], false);
-        $view->assertDontSee('<option value="gb" selected>', false);
+        $view->assertSeeHtmlInOrder(['<option value="0" selected>Unknown</option>']);
+
+        $view->assertDontSeeHtml('<option value="gb" selected>');
     }
 
     #[Test]
@@ -234,10 +236,10 @@ class FormSelectTest extends TestCase
             ]
         );
 
-        $view->assertSeeInOrder([
+        $view->assertSeeHtmlInOrder([
             '<option value="gb" selected>United Kingdom</option>',
             '<option value="us">United States</option>',
-        ], false);
+        ]);
     }
 
     #[Test]
@@ -254,10 +256,10 @@ class FormSelectTest extends TestCase
             ]
         );
 
-        $view->assertSeeInOrder([
+        $view->assertSeeHtmlInOrder([
             '<option value="gb" selected>United Kingdom</option>',
             '<option value="us">United States</option>',
-        ], false);
+        ]);
     }
 
     #[Test]
@@ -275,10 +277,10 @@ class FormSelectTest extends TestCase
             ]
         );
 
-        $view->assertSeeInOrder([
+        $view->assertSeeHtmlInOrder([
             '<option value="de">Germany</option>',
             '<option value="gb" selected>United Kingdom</option>',
             '<option value="us" selected>United States</option>',
-        ], false);
+        ]);
     }
 }

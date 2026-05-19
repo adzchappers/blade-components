@@ -19,7 +19,7 @@ class FormInputTest extends TestCase
     {
         $view = $this->blade('<x-form-input name="email" />');
 
-        $view->assertSeeInOrder(['<input', 'type="text"', 'name="email"'], false);
+        $view->assertSeeHtmlInOrder(['<input', 'type="text"', 'name="email"']);
     }
 
     #[Test]
@@ -27,7 +27,7 @@ class FormInputTest extends TestCase
     {
         $view = $this->blade('<x-form-input name="email" required />');
 
-        $view->assertSeeInOrder(['required aria-required="true"'], false);
+        $view->assertSeeHtmlInOrder(['required aria-required="true"']);
     }
 
     #[Test]
@@ -35,7 +35,7 @@ class FormInputTest extends TestCase
     {
         $view = $this->blade('<x-form-input name="email" disabled />');
 
-        $view->assertSeeInOrder(['disabled aria-disabled="true"'], false);
+        $view->assertSeeHtmlInOrder(['disabled aria-disabled="true"']);
     }
 
     #[Test]
@@ -43,7 +43,7 @@ class FormInputTest extends TestCase
     {
         $view = $this->blade('<x-form-input name="email" readonly />');
 
-        $view->assertSeeInOrder(['readonly aria-readonly="true"'], false);
+        $view->assertSeeHtmlInOrder(['readonly aria-readonly="true"']);
     }
 
     #[Test]
@@ -51,7 +51,7 @@ class FormInputTest extends TestCase
     {
         $view = $this->blade('<x-form-input name="email" />');
 
-        $view->assertSeeInOrder(['<input', 'id="', 'type="text"'], false);
+        $view->assertSeeHtmlInOrder(['<input', 'id="', 'type="text"']);
     }
 
     #[Test]
@@ -59,7 +59,7 @@ class FormInputTest extends TestCase
     {
         $view = $this->blade('<x-form-input name="email" label="Email address" />');
 
-        $view->assertSeeInOrder(['<label', 'Email address', '</label>', '<input', 'id="', 'type="text"'], false);
+        $view->assertSeeHtmlInOrder(['<label', 'Email address', '</label>', '<input', 'id="', 'type="text"']);
     }
 
     #[Test]
@@ -67,7 +67,7 @@ class FormInputTest extends TestCase
     {
         $view = $this->blade('<x-form-input name="email" label="Email address" id="email-field" />');
 
-        $view->assertSeeInOrder([
+        $view->assertSeeHtmlInOrder([
             '<label',
             'for="email-field"',
             'Email address',
@@ -75,7 +75,7 @@ class FormInputTest extends TestCase
             '<input',
             'id="email-field"',
             'type="text"',
-        ], false);
+        ]);
     }
 
     #[Test]
@@ -83,7 +83,7 @@ class FormInputTest extends TestCase
     {
         $view = $this->blade('<x-form-input name="email" />');
 
-        $view->assertDontSee('<label', false);
+        $view->assertDontSeeHtml('<label');
     }
 
     #[Test]
@@ -93,7 +93,7 @@ class FormInputTest extends TestCase
 
         $view = $this->blade('<x-form-input name="email" />');
 
-        $view->assertSeeInOrder(['text-red-600', 'Email is required'], false);
+        $view->assertSeeHtmlInOrder(['text-red-600', 'Email is required']);
     }
 
     #[Test]
@@ -103,7 +103,7 @@ class FormInputTest extends TestCase
 
         $view = $this->blade('<x-form-input name="email" :show-error="false" />');
 
-        $view->assertDontSee(['text-red-600', 'Email is required'], false);
+        $view->assertDontSeeHtml(['text-red-600', 'Email is required']);
     }
 
     #[Test]
@@ -113,7 +113,7 @@ class FormInputTest extends TestCase
 
         $view = $this->blade('<x-form-input name="email" />');
 
-        $view->assertDontSee(['text-red-600', 'Name is required'], false);
+        $view->assertDontSeeHtml(['text-red-600', 'Name is required']);
     }
 
     #[Test]
@@ -123,7 +123,7 @@ class FormInputTest extends TestCase
 
         $view = $this->blade('<x-form-input name="tags[]" show-error />');
 
-        $view->assertSeeInOrder(['Tags are required'], false);
+        $view->assertSeeHtmlInOrder(['Tags are required']);
     }
 
     #[Test]
@@ -133,8 +133,9 @@ class FormInputTest extends TestCase
 
         $view = $this->blade('<x-form-input name="email" value="test@example.com" />');
 
-        $view->assertSeeInOrder(['value="this-is-a-different-value"'], false);
-        $view->assertDontSee(['value="test@example.com"'], false);
+        $view->assertSeeHtmlInOrder(['value="this-is-a-different-value"']);
+
+        $view->assertDontSeeHtml(['value="test@example.com"']);
     }
 
     #[Test]
@@ -142,7 +143,7 @@ class FormInputTest extends TestCase
     {
         $view = $this->blade('<x-form-input name="email" class="custom-class" />');
 
-        $view->assertSeeInOrder(['custom-class'], false);
+        $view->assertSeeHtmlInOrder(['custom-class']);
     }
 
     #[Test]
@@ -150,8 +151,9 @@ class FormInputTest extends TestCase
     {
         $view = $this->blade('<x-form-input name="email" type="email" />');
 
-        $view->assertSeeInOrder(['<input', 'type="email"', 'name="email"'], false);
-        $view->assertDontSee('type="text"', false);
+        $view->assertSeeHtmlInOrder(['<input', 'type="email"', 'name="email"']);
+
+        $view->assertDontSeeHtml('type="text"');
     }
 
     #[Test]
@@ -159,7 +161,7 @@ class FormInputTest extends TestCase
     {
         $view = $this->blade('<x-form-input name="email" placeholder="Enter email" />');
 
-        $view->assertSeeInOrder(['placeholder="Enter email"'], false);
+        $view->assertSeeHtmlInOrder(['placeholder="Enter email"']);
     }
 
     #[Test]
@@ -167,7 +169,7 @@ class FormInputTest extends TestCase
     {
         $view = $this->blade('<x-form-input name="email" placeholder="" />');
 
-        $view->assertSeeInOrder(['placeholder=""'], false);
+        $view->assertSeeHtmlInOrder(['placeholder=""']);
     }
 
     #[Test]
@@ -175,7 +177,7 @@ class FormInputTest extends TestCase
     {
         $view = $this->blade('<x-form-input name="email" value="test@example.com" />');
 
-        $view->assertSeeInOrder(['value="test@example.com"'], false);
+        $view->assertSeeHtmlInOrder(['value="test@example.com"']);
     }
 
     #[Test]
@@ -183,8 +185,9 @@ class FormInputTest extends TestCase
     {
         $view = $this->blade('<x-form-input type="hidden" name="email" />');
 
-        $view->assertSeeInOrder(['<input', 'type="hidden"', 'name="email"'], false);
-        $view->assertDontSee(['div', 'label'], false);
+        $view->assertSeeHtmlInOrder(['<input', 'type="hidden"', 'name="email"']);
+
+        $view->assertDontSeeHtml(['div', 'label']);
     }
 
     #[Test]
@@ -192,7 +195,7 @@ class FormInputTest extends TestCase
     {
         $view = $this->blade('<x-form-input type="hidden" name="email" label="Email" />');
 
-        $view->assertDontSee('<label', false);
+        $view->assertDontSeeHtml('<label');
     }
 
     #[Test]
@@ -202,6 +205,6 @@ class FormInputTest extends TestCase
 
         $view = $this->blade('<x-form-input type="hidden" name="email" />');
 
-        $view->assertDontSee('text-red-600', false);
+        $view->assertDontSeeHtml('text-red-600');
     }
 }
