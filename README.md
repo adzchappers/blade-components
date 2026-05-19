@@ -6,11 +6,11 @@
 [![Static Analysis](https://github.com/adzchappers/blade-components/actions/workflows/static-analysis.yml/badge.svg?branch=main)](https://github.com/adzchappers/blade-components/actions/workflows/static-analysis.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/adzchappers/blade-components.svg?style=flat-square)](https://packagist.org/packages/adzchappers/blade-components)
 
-A set of Tailwind-styled Blade components for making building blade templates easier.
+A set of javascript free Tailwind-styled Blade components for making building blade templates easier.
 
 ## Features
 
-- Components for most standard form elements with Tailwind CSS classes out of the box
+- Components for standard form elements with Tailwind CSS classes out of the box
 - Automatic error rendering alongside each input
 - Old-input repopulation via `old()` after failed form submissions
 - Method spoofing for `PUT`, `PATCH`, and `DELETE` forms with automatic CSRF output
@@ -41,7 +41,7 @@ php artisan vendor:publish --tag="blade-components-config"
 
 The package's Blade views ship with Tailwind utility classes. For those classes to appear in your compiled CSS, add the package's view directory to your `tailwind.config.js` `content` array:
 
-````js
+```js
 // tailwind.config.js
 module.exports = {
     content: [
@@ -50,15 +50,13 @@ module.exports = {
     ],
     // ...
 };
-````
-
-The components were built against Tailwind v3 and assume the [`@tailwindcss/forms`](https://github.com/tailwindlabs/tailwindcss-forms) plugin is enabled. Without the plugin the form controls still render, but the default browser appearance might show through in places.
+```
 
 ## Configuration
 
 After publishing, `config/blade-components.php` exposes two keys:
 
-- **`prefix`** - A string prepended to every component name. With `'prefix' => 'bc'`, `<x-form />` becomes `<x-bc-form />`. Defaults to `''` (no prefix).
+- **`prefix`** - A string prepended to every component name. With `'prefix' => 'ac'`, `<x-form />` becomes `<x-ac-form />`. Defaults to `''` (no prefix).
 - **`components`** - A map of component name → `['class' => ..., 'view' => ...]`. Override either entry to swap in a custom class or Blade view for any component.
 
 ```php
@@ -228,7 +226,7 @@ Renders a `<select>` element with an optional `<label>` and error message.
 
 #### `x-form-checkbox`
 
-Renders a single `<input type="checkbox">` with an optional `<label>` and error message. Handles old-input correctly - if the form was previously submitted and the checkbox was unchecked, it stays unchecked.
+Renders a single `<input type="checkbox">` with an optional `<label>` and error message. Handles old-input correctly - if the form was previously submitted and the checkbox was unchecked, it stays unchecked. Whilst errors display as default on checkboxes, you might want to set them to false if you have a group of checkboxes and call the error manually so the errors aren't duplicated after every checkbox.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
@@ -252,7 +250,7 @@ Renders a single `<input type="checkbox">` with an optional `<label>` and error 
 
 #### `x-form-radio`
 
-Renders a single `<input type="radio">` with an optional `<label>`. Typically used inside an `<x-form-fieldset>` to group related options.
+Renders a single `<input type="radio">` with an optional `<label>`. Typically used inside an `<x-form-fieldset>` to group related options. Whilst errors display as default on radios, you might want to set them to false if you have a group of radios and call the error manually so the errors aren't duplicated after every radio.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|

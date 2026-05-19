@@ -19,12 +19,12 @@ class FormTextareaTest extends TestCase
     {
         $view = $this->blade('<x-form-textarea name="description" value="Some text" />');
 
-        $view->assertSeeHtmlInOrder([
+        $view->assertSeeInOrder([
             '<textarea',
             'name="description"',
             'Some text',
             '</textarea>',
-        ]);
+        ], false);
     }
 
     #[Test]
@@ -32,7 +32,7 @@ class FormTextareaTest extends TestCase
     {
         $view = $this->blade('<x-form-textarea name="description" required />');
 
-        $view->assertSeeHtmlInOrder(['required', 'aria-required="true"']);
+        $view->assertSeeInOrder(['required', 'aria-required="true"'], false);
     }
 
     #[Test]
@@ -40,7 +40,7 @@ class FormTextareaTest extends TestCase
     {
         $view = $this->blade('<x-form-textarea name="description" disabled />');
 
-        $view->assertSeeHtmlInOrder(['disabled aria-disabled="true"']);
+        $view->assertSeeInOrder(['disabled aria-disabled="true"'], false);
     }
 
     #[Test]
@@ -48,7 +48,7 @@ class FormTextareaTest extends TestCase
     {
         $view = $this->blade('<x-form-textarea name="description" readonly />');
 
-        $view->assertSeeHtmlInOrder(['readonly', 'aria-readonly="true"']);
+        $view->assertSeeInOrder(['readonly', 'aria-readonly="true"'], false);
     }
 
     #[Test]
@@ -56,7 +56,7 @@ class FormTextareaTest extends TestCase
     {
         $view = $this->blade('<x-form-textarea name="description" placeholder="Enter description" />');
 
-        $view->assertSeeHtmlInOrder(['placeholder="Enter description"']);
+        $view->assertSeeInOrder(['placeholder="Enter description"'], false);
     }
 
     #[Test]
@@ -64,7 +64,7 @@ class FormTextareaTest extends TestCase
     {
         $view = $this->blade('<x-form-textarea name="description" placeholder="" />');
 
-        $view->assertSeeHtmlInOrder(['placeholder=""']);
+        $view->assertSeeInOrder(['placeholder=""'], false);
     }
 
     #[Test]
@@ -72,7 +72,7 @@ class FormTextareaTest extends TestCase
     {
         $view = $this->blade('<x-form-textarea name="description" />');
 
-        $view->assertSeeHtmlInOrder(['<textarea', 'id="']);
+        $view->assertSeeInOrder(['<textarea', 'id="'], false);
     }
 
     #[Test]
@@ -80,13 +80,13 @@ class FormTextareaTest extends TestCase
     {
         $view = $this->blade('<x-form-textarea name="description" label="Description" />');
 
-        $view->assertSeeHtmlInOrder([
+        $view->assertSeeInOrder([
             '<label',
             'Description',
             '</label>',
             '<textarea',
             '</textarea>',
-        ]);
+        ], false);
     }
 
     #[Test]
@@ -94,7 +94,7 @@ class FormTextareaTest extends TestCase
     {
         $view = $this->blade('<x-form-textarea name="description" label="Description" id="desc" />');
 
-        $view->assertSeeHtmlInOrder([
+        $view->assertSeeInOrder([
             '<label',
             'for="desc"',
             'Description',
@@ -102,7 +102,7 @@ class FormTextareaTest extends TestCase
             '<textarea',
             'id="desc"',
             '</textarea>',
-        ]);
+        ], false);
     }
 
     #[Test]
@@ -110,7 +110,7 @@ class FormTextareaTest extends TestCase
     {
         $view = $this->blade('<x-form-textarea name="description" />');
 
-        $view->assertDontSeeHtml('<label');
+        $view->assertDontSee('<label', false);
     }
 
     #[Test]
@@ -120,7 +120,7 @@ class FormTextareaTest extends TestCase
 
         $view = $this->blade('<x-form-textarea name="description" />');
 
-        $view->assertSeeHtmlInOrder(['text-red-600', 'Description is required']);
+        $view->assertSeeInOrder(['text-red-600', 'Description is required'], false);
     }
 
     #[Test]
@@ -130,7 +130,7 @@ class FormTextareaTest extends TestCase
 
         $view = $this->blade('<x-form-textarea name="description" :show-error="false" />');
 
-        $view->assertDontSeeHtml(['text-red-600', 'Description is required']);
+        $view->assertDontSee(['text-red-600', 'Description is required'], false);
     }
 
     #[Test]
@@ -140,7 +140,7 @@ class FormTextareaTest extends TestCase
 
         $view = $this->blade('<x-form-textarea name="description" show-error />');
 
-        $view->assertDontSeeHtml(['text-red-600', 'Name is required']);
+        $view->assertDontSee(['text-red-600', 'Name is required'], false);
     }
 
     #[Test]
@@ -150,7 +150,7 @@ class FormTextareaTest extends TestCase
 
         $view = $this->blade('<x-form-textarea name="tags[]" />');
 
-        $view->assertSeeHtmlInOrder(['Tags are required']);
+        $view->assertSeeInOrder(['Tags are required'], false);
     }
 
     #[Test]
@@ -160,8 +160,8 @@ class FormTextareaTest extends TestCase
 
         $view = $this->blade('<x-form-textarea name="description" value="old value" />');
 
-        $view->assertSeeHtmlInOrder(['new value']);
-        $view->assertDontSeeHtml('old value');
+        $view->assertSeeInOrder(['new value'], false);
+        $view->assertDontSee('old value', false);
     }
 
     #[Test]
@@ -169,6 +169,6 @@ class FormTextareaTest extends TestCase
     {
         $view = $this->blade('<x-form-textarea name="description" class="custom-class" />');
 
-        $view->assertSeeHtmlInOrder(['custom-class']);
+        $view->assertSeeInOrder(['custom-class'], false);
     }
 }

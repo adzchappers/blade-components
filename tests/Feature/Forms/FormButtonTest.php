@@ -14,7 +14,7 @@ class FormButtonTest extends TestCase
     {
         $view = $this->blade('<x-form-button></x-form-button>');
 
-        $view->assertSeeHtmlInOrder(['<button', 'type="submit"', 'Submit', '</button>']);
+        $view->assertSeeInOrder(['<button', 'type="submit"', 'Submit', '</button>'], false);
     }
 
     #[Test]
@@ -22,7 +22,7 @@ class FormButtonTest extends TestCase
     {
         $view = $this->blade('<x-form-button>   </x-form-button>');
 
-        $view->assertSeeHtmlInOrder(['<button', 'type="submit"', 'Submit', '</button>']);
+        $view->assertSeeInOrder(['<button', 'type="submit"', 'Submit', '</button>'], false);
     }
 
     #[Test]
@@ -30,7 +30,7 @@ class FormButtonTest extends TestCase
     {
         $view = $this->blade('<x-form-button type="button">Cancel</x-form-button>');
 
-        $view->assertSeeHtmlInOrder(['<button', 'type="button"', 'Cancel', '</button>']);
+        $view->assertSeeInOrder(['<button', 'type="button"', 'Cancel', '</button>'], false);
     }
 
     #[Test]
@@ -38,7 +38,7 @@ class FormButtonTest extends TestCase
     {
         $view = $this->blade('<x-form-button type="reset">Reset</x-form-button>');
 
-        $view->assertSeeHtmlInOrder(['<button', 'type="reset"', 'Reset', '</button>']);
+        $view->assertSeeInOrder(['<button', 'type="reset"', 'Reset', '</button>'], false);
     }
 
     #[Test]
@@ -46,7 +46,7 @@ class FormButtonTest extends TestCase
     {
         $view = $this->blade('<x-form-button type="BUTTON">Cancel</x-form-button>');
 
-        $view->assertSeeHtmlInOrder(['<button', 'type="button"', 'Cancel', '</button>']);
+        $view->assertSeeInOrder(['<button', 'type="button"', 'Cancel', '</button>'], false);
     }
 
     #[Test]
@@ -54,7 +54,7 @@ class FormButtonTest extends TestCase
     {
         $view = $this->blade('<x-form-button type="invalid">Save</x-form-button>');
 
-        $view->assertSeeHtmlInOrder(['<button', 'type="submit"', 'Save', '</button>']);
+        $view->assertSeeInOrder(['<button', 'type="submit"', 'Save', '</button>'], false);
     }
 
     #[Test]
@@ -62,13 +62,13 @@ class FormButtonTest extends TestCase
     {
         $view = $this->blade('<x-form-button class="custom-class">Submit Form</x-form-button>');
 
-        $view->assertSeeHtmlInOrder([
+        $view->assertSeeInOrder([
             '<button',
             'type="submit"',
             'class="',
             'custom-class',
             'Submit Form',
             '</button>',
-        ]);
+        ], false);
     }
 }

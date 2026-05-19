@@ -19,8 +19,8 @@ class FormCheckboxTest extends TestCase
     {
         $view = $this->blade('<x-form-checkbox name="agree" value="1" />');
 
-        $view->assertSeeHtmlInOrder(['type="checkbox"', 'name="agree"', 'value="1"']);
-        $view->assertDontSeeHtml(['checked ', '<label']);
+        $view->assertSeeInOrder(['type="checkbox"', 'name="agree"', 'value="1"'], false);
+        $view->assertDontSee(['checked ', '<label'], false);
     }
 
     #[Test]
@@ -28,7 +28,7 @@ class FormCheckboxTest extends TestCase
     {
         $view = $this->blade('<x-form-checkbox name="agree" :checked="true" />');
 
-        $view->assertSeeHtmlInOrder(['type="checkbox"', 'name="agree"', 'value="1"', 'checked ']);
+        $view->assertSeeInOrder(['type="checkbox"', 'name="agree"', 'value="1"', 'checked '], false);
     }
 
     #[Test]
@@ -40,7 +40,7 @@ class FormCheckboxTest extends TestCase
 
         $view = $this->blade('<x-form-checkbox name="agree" :checked="true" />');
 
-        $view->assertDontSeeHtml('checked ');
+        $view->assertDontSee('checked ', false);
     }
 
     #[Test]
@@ -48,7 +48,7 @@ class FormCheckboxTest extends TestCase
     {
         $view = $this->blade('<x-form-checkbox name="agree" required />');
 
-        $view->assertSeeHtmlInOrder(['required', 'aria-required="true"']);
+        $view->assertSeeInOrder(['required', 'aria-required="true"'], false);
     }
 
     #[Test]
@@ -56,7 +56,7 @@ class FormCheckboxTest extends TestCase
     {
         $view = $this->blade('<x-form-checkbox name="agree" disabled />');
 
-        $view->assertSeeHtmlInOrder(['disabled', 'aria-disabled="true"']);
+        $view->assertSeeInOrder(['disabled', 'aria-disabled="true"'], false);
     }
 
     #[Test]
@@ -64,7 +64,7 @@ class FormCheckboxTest extends TestCase
     {
         $view = $this->blade('<x-form-checkbox name="agree" readonly />');
 
-        $view->assertSeeHtmlInOrder(['tabindex="-1"', 'aria-readonly="true"', 'pointer-events-none']);
+        $view->assertSeeInOrder(['tabindex="-1"', 'aria-readonly="true"', 'pointer-events-none'], false);
     }
 
     #[Test]
@@ -72,7 +72,7 @@ class FormCheckboxTest extends TestCase
     {
         $view = $this->blade('<x-form-checkbox name="agree" />');
 
-        $view->assertSeeHtmlInOrder(['<input', 'id="', 'type="checkbox"']);
+        $view->assertSeeInOrder(['<input', 'id="', 'type="checkbox"'], false);
     }
 
     #[Test]
@@ -80,7 +80,7 @@ class FormCheckboxTest extends TestCase
     {
         $view = $this->blade('<x-form-checkbox name="agree" label="I agree to the terms" />');
 
-        $view->assertSeeHtmlInOrder([
+        $view->assertSeeInOrder([
             'id="',
             'type="checkbox"',
             'name="agree"',
@@ -89,7 +89,7 @@ class FormCheckboxTest extends TestCase
             'for="',
             'I agree to the terms',
             '</label>',
-        ]);
+        ], false);
     }
 
     #[Test]
@@ -97,7 +97,7 @@ class FormCheckboxTest extends TestCase
     {
         $view = $this->blade('<x-form-checkbox name="agree" label="Agree" id="agree-checkbox" />');
 
-        $view->assertSeeHtmlInOrder([
+        $view->assertSeeInOrder([
             'id="agree-checkbox"',
             'type="checkbox"',
             'name="agree"',
@@ -106,7 +106,7 @@ class FormCheckboxTest extends TestCase
             'for="agree-checkbox"',
             'Agree',
             '</label>',
-        ]);
+        ], false);
     }
 
     #[Test]
@@ -114,7 +114,7 @@ class FormCheckboxTest extends TestCase
     {
         $view = $this->blade('<x-form-checkbox name="agree" />');
 
-        $view->assertDontSeeHtml('<label');
+        $view->assertDontSee('<label', false);
     }
 
     #[Test]
@@ -124,7 +124,7 @@ class FormCheckboxTest extends TestCase
 
         $view = $this->blade('<x-form-checkbox name="agree" />');
 
-        $view->assertSeeHtmlInOrder(['text-red-600', 'You must agree']);
+        $view->assertSeeInOrder(['text-red-600', 'You must agree'], false);
     }
 
     #[Test]
@@ -134,7 +134,7 @@ class FormCheckboxTest extends TestCase
 
         $view = $this->blade('<x-form-checkbox name="agree" :show-error="false" />');
 
-        $view->assertDontSeeHtml('text-red-600');
+        $view->assertDontSee('text-red-600', false);
     }
 
     #[Test]
@@ -144,7 +144,7 @@ class FormCheckboxTest extends TestCase
 
         $view = $this->blade('<x-form-checkbox name="agree" />');
 
-        $view->assertDontSeeHtml('text-red-600');
+        $view->assertDontSee('text-red-600', false);
     }
 
     #[Test]
@@ -154,7 +154,7 @@ class FormCheckboxTest extends TestCase
 
         $view = $this->blade('<x-form-checkbox name="permissions[]" />');
 
-        $view->assertSeeHtmlInOrder(['Permissions are required']);
+        $view->assertSeeInOrder(['Permissions are required'], false);
     }
 
     #[Test]
@@ -164,7 +164,7 @@ class FormCheckboxTest extends TestCase
 
         $view = $this->blade('<x-form-checkbox name="agree" value="1" />');
 
-        $view->assertSeeHtmlInOrder(['checked ']);
+        $view->assertSeeInOrder(['checked '], false);
     }
 
     #[Test]
@@ -172,6 +172,6 @@ class FormCheckboxTest extends TestCase
     {
         $view = $this->blade('<x-form-checkbox name="agree" class="custom-class" />');
 
-        $view->assertSeeHtmlInOrder(['custom-class']);
+        $view->assertSeeInOrder(['custom-class'], false);
     }
 }
