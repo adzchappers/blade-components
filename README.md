@@ -39,18 +39,16 @@ php artisan vendor:publish --tag="blade-components-config"
 
 ## Tailwind CSS
 
-The package's Blade views ship with Tailwind utility classes. For those classes to appear in your compiled CSS, add the package's view directory to your `tailwind.config.js` `content` array:
+The package's Blade views ship with Tailwind v4 utility classes. Add a `@source` directive to your CSS entry point so Tailwind scans the package views, and load the `@tailwindcss/forms` plugin:
 
-```js
-// tailwind.config.js
-module.exports = {
-    content: [
-        './resources/**/*.blade.php',
-        './vendor/adzchappers/blade-components/resources/views/**/*.blade.php',
-    ],
-    // ...
-};
+```css
+/* app.css */
+@import "tailwindcss";
+@plugin "@tailwindcss/forms";
+@source "../../vendor/adzchappers/blade-components/resources/views";
 ```
+
+Adjust the `@source` path to be relative to your CSS file's location within your project.
 
 ## Configuration
 
