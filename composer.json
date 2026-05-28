@@ -1,0 +1,60 @@
+{
+    "name": "adzchappers/blade-components",
+    "description": "A set of components to use within Laravel Blade views",
+    "keywords": [
+        "adzchappers",
+        "laravel",
+        "form",
+        "forms",
+        "form-components",
+        "laravel-form-components",
+        "blade",
+        "blade-components",
+        "laravel-blade-components"
+    ],
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Adz Chappers"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "AdzChappers\\BladeComponents\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "AdzChappers\\BladeComponents\\BladeComponentsServiceProvider"
+            ]
+        }
+    },
+    "require": {
+        "php": "^8.2",
+        "illuminate/support": "^12.0|^13.0"
+    },
+    "require-dev": {
+        "larastan/larastan": "^3.2",
+        "laravel/pint": "^1.21",
+        "orchestra/testbench": "^10.0",
+        "phpstan/phpstan": "^2.1",
+        "phpunit/phpunit": "^11.5"
+    },
+    "scripts": {
+        "pint": "pint --config pint.json",
+        "test:phpunit": "./vendor/bin/phpunit",
+        "test:coverage": "./vendor/bin/phpunit --coverage-html coverage",
+        "test:phpstan": "./vendor/bin/phpstan analyse",
+        "test": [
+            "@test:phpunit",
+            "@test:phpstan"
+        ]
+    }
+}
