@@ -33,6 +33,7 @@ class FormSelectTest extends TestCase
             '<option value="gb">United Kingdom</option>',
             '<option value="us">United States</option>',
             '</select>',
+            'pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-400',
         ]);
     }
 
@@ -183,6 +184,8 @@ class FormSelectTest extends TestCase
         $view = $this->blade('<x-form-select name="countries" multiple></x-form-select>');
 
         $view->assertSeeHtmlInOrder(['name="countries[]"', 'multiple']);
+
+        $view->assertDontSeeHtml('pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-400');
     }
 
     #[Test]
