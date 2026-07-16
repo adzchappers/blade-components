@@ -14,7 +14,7 @@ class FormButtonTest extends TestCase
     {
         $view = $this->blade('<x-form-button></x-form-button>');
 
-        $view->assertSeeHtmlInOrder(['<button', 'type="submit"', 'Submit', '</button>']);
+        $view->assertSeeHtmlInOrder(['<button', 'type="submit"', 'cursor-pointer', 'Submit', '</button>']);
     }
 
     #[Test]
